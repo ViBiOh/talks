@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  site:
+    image: vibioh/talks
+    command:
+    - -prometheusMetricsHost
+    - talks:1080
+    - -spa
+    - -csp
+    - default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self'; font-src 'self' fonts.gstatic.com;
+    labels:
+      traefik.frontend.passHostHeader: 'true'
+      traefik.frontend.rule: 'Host: talks.vibioh.fr'
+      traefik.port: '1080'
+    logging:
+      driver: json-file
+      options:
+        max-size: '50m'
+    restart: on-failure:5
+    read_only: true
+    cpu_shares: 128
+    mem_limit: 67108864
+    security_opt:
+    - no-new-privileges
+
+networks:
+  default:
+    external:
+      name: traefik

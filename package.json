@@ -1,0 +1,62 @@
+{
+  "name": "talks",
+  "version": "1.0.0",
+  "description": "Talks of Vincent Boutour",
+  "main": "web/index.js",
+  "scripts": {
+    "clean":
+      "rm -rf ./dist && mkdir -p ./dist/plugin && mkdir -p ./dist/doc/img && mkdir -p ./tmp",
+    "copy:robots": "cp ./web/robots.txt ./dist/",
+    "copy:google": "cp ./web/google*.html ./dist/",
+    "copy:favicon": "cp ./web/favicon/* ./dist/",
+    "copy:md": "cp ./doc/*.md ./dist/doc/",
+    "copy":
+      "npm run copy:robots && npm run copy:md && npm run copy:google && npm run copy:favicon",
+    "reveal:css":
+      "./node_modules/js-index-builder/cleanCss.js -i \"./node_modules/reveal.js/css/**/*.css\" -o ./dist/css",
+    "reveal:lib": "cp -R ./node_modules/reveal.js/lib ./dist/lib",
+    "reveal:plugin":
+      "cp -R ./node_modules/reveal.js/plugin/markdown ./node_modules/reveal.js/plugin/highlight ./dist/plugin",
+    "reveal":
+      "npm run reveal:css && npm run reveal:lib && npm run reveal:plugin",
+    "js":
+      "cat ./node_modules/reveal.js/lib/js/head.min.js ./node_modules/reveal.js/js/reveal.js ./web/js/index.js ./web/js/nav.js | ./node_modules/.bin/uglifyjs -c > ./tmp/index.js",
+    "style":
+      "./node_modules/.bin/lessc ./web/css/style.less | ./node_modules/.bin/cleancss -O2 -o ./tmp/style.css",
+    "structure":
+      "./structure.js -d \"doc/*.md\" -j ./web/mustache_raw.json -s ./dist/sitemap.xml -m ./web/mustache.json",
+    "mustache":
+      "./node_modules/js-index-builder/index.js -t \"web/*.html\" -b `git log --pretty=format:'%h' -n 1` -p \"web/partials/*.html\" -j ./tmp/index.js -c ./tmp/style.css -o ./tmp",
+    "minify:html":
+      "./node_modules/.bin/html-minifier -o ./dist/index.html -c ./html-minifier.json ./tmp/index.html",
+    "minify:js":
+      "./node_modules/.bin/uglifyjs ./node_modules/reveal.js/plugin/markdown/markdown.js --compress --mangle --output ./dist/plugin/markdown/markdown.js",
+    "minify": "npm run minify:html && npm run minify:js",
+    "build":
+      "npm run clean && npm run copy && npm run reveal && npm run js && npm run style && npm run structure && npm run mustache && npm run minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViBiOh/talks.git"
+  },
+  "keywords": ["markdown", "talks"],
+  "author": "Vincent Boutour <bob@vibioh.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ViBiOh/talks/issues"
+  },
+  "homepage": "https://github.com/ViBiOh/talks#readme",
+  "dependencies": {
+    "reveal.js": "git+https://github.com/hakimel/reveal.js.git"
+  },
+  "devDependencies": {
+    "clean-css-cli": "latest",
+    "glob": "latest",
+    "html-minifier": "latest",
+    "js-index-builder": "ViBiOh/js-index-builder",
+    "js-utils": "ViBiOh/js-utils",
+    "less": "latest",
+    "uglify-es": "latest",
+    "yargs": "latest"
+  }
+}
