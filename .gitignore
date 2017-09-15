@@ -1,10 +1,11 @@
 # Node Package Manager
 node_modules/
 **/npm-debug.log
-coverage/
+
+# Golang
+vendor/
+
+# Build
 dist/
 tmp/
-package-lock.json
-
-# Project
-web/mustache.json
+bin/
