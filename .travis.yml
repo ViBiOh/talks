@@ -1,18 +1,55 @@
-language: node_js
-sudo: required
-services:
-- docker
-node_js: 8
-script: |
-  npm run build &&
-  docker build -t ${DOCKER_USER}/talks .
-after_success: |
-  if [ "${TRAVIS_BRANCH}" == "master" ]; then
-    docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} && docker push ${DOCKER_USER}/talks
-  fi
+jobs:
+  include:
+  - stage: Build
+
+    sudo: required
+    services:
+    - docker
+    script: docker build -t vibioh/talks:${TRAVIS_COMMIT} .
+    after_success: |
+      echo ${DOCKER_PASS} | docker login -u vibioh --password-stdin && \
+      docker push vibioh/talks:${TRAVIS_COMMIT}
+
+  - stage: Publish
+
+    sudo: required
+    services:
+    - docker
+    script: |
+      echo ${DOCKER_PASS} | docker login -u vibioh --password-stdin
+      docker pull vibioh/talks:${TRAVIS_COMMIT}
+      docker tag vibioh/talks:${TRAVIS_COMMIT} vibioh/talks:latest
+      docker push vibioh/talks:latest
+
+  - stage: Build
+
+    language: go
+    go: '1.10'
+    script: make algolia
+    after_success: |
+      if [ "${TRAVIS_BRANCH}" == "master" ]; then
+        ./index.sh
+      fi
+
+  - stage: Deploy
+
+    script: |
+      sed \
+        -e "s|\${ALGOLIA_APP}|${ALGOLIA_APP}|g" \
+        -e "s|\${ALGOLIA_KEY}|${ALGOLIA_READ_ONLY_KEY}|g" \
+        -e "s|\${ALGOLIA_INDEX}|${ALGOLIA_INDEX}|g" \
+        docker-compose.yml > docker-compose-env.yml
+    deploy:
+      provider: script
+      skip_cleanup: true
+      script: 'curl -H "Authorization: GitHub ${GITHUB_OAUTH_TOKEN}" -X POST https://dashboard-api.vibioh.fr/deploy/talks/ --data-binary @docker-compose-env.yml'
+
+stages:
+  - Build
+  - name: Publish
+    if: branch = master
+  - name: Deploy
+    if: branch = master
+
 notifications:
   email: false
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: "curl -H 'Authorization: GitHub ${GITHUB_OAUTH_TOKEN}' -X POST https://dashboard-api.vibioh.fr/containers/talks/ --data-binary @docker-compose.yml"

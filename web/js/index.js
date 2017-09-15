@@ -1,26 +1,30 @@
 (function() {
-  var link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.type = "text/css";
-  link.href = "/css/print/paper.css?v={{version}}";
-  document.getElementsByTagName("head")[0].appendChild(link);
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = '/css/paper.css?v={{version}}';
+  document.getElementsByTagName('head')[0].appendChild(link);
 })();
 
 var config = (function() {
-  var override = {};
+  var override = {
+    markdown: 'whoami',
+    pageNum: 0,
+    slideNum: 0,
+  };
 
-  function overrideConfig(location, regex, property, defaultValue) {
-    override[property] = defaultValue;
-    window.location[location].replace(regex, function(match, group) {
-      override[property] = group;
-    });
-  }
-
-  overrideConfig("pathname", /([^/]+)/gim, "markdown", "whoami");
-  overrideConfig("hash", /([0-9]+)$/gim, "pageNum", 0);
+  window.location.pathname.replace(/([^/]+)/gim, function(match, markdown) {
+    override.markdown = markdown;
+  });
+  window.location.hash.replace(/\/([0-9]+)(?:\/([0-9]+))?$/gim, function(match, pageNum, slideNum) {
+    override.pageNum = pageNum;
+    override.slideNum = slideNum;
+  });
 
   return override;
 })();
+
+var currentName = '';
 
 function removeAllChild(element) {
   while (element.firstChild) {
@@ -28,26 +32,37 @@ function removeAllChild(element) {
   }
 }
 
-function loadMarkdown() {
-  var slides = document.getElementsByClassName("slides")[0];
-  removeAllChild(slides);
-
-  var section = document.createElement("section");
-  section.setAttribute(
-    "data-markdown",
-    "/doc/" + config.markdown + ".md?v={{version}}"
-  );
-  section.setAttribute("data-separator", "\n\n\n");
-  section.setAttribute("data-charset", "utf-8");
-
-  slides.appendChild(section);
-
-  RevealMarkdown.initialize();
-  Reveal.navigateTo(config.pageNum);
+function getDocUrl(name) {
+  return '/doc/' + name + '/index.md?v={{version}}';
 }
 
-Reveal.addEventListener("ready", function() {
-  loadMarkdown();
+function loadMarkdown(markdownFilename, pageNum, slideNum) {
+  let docUrl = getDocUrl(markdownFilename);
+  currentName = markdownFilename
+
+  fetch(docUrl, { method: 'HEAD' }).then(function(response) {
+    if (!response.ok) {
+      docUrl = getDocUrl('whoami');
+    }
+
+    var slides = document.getElementsByClassName('slides')[0];
+    removeAllChild(slides);
+
+    var section = document.createElement('section');
+    section.setAttribute('data-markdown', docUrl);
+    section.setAttribute('data-separator', '^\n\n\n');
+    section.setAttribute('data-separator-vertical', '^\n\n');
+    section.setAttribute('data-charset', 'utf-8');
+
+    slides.appendChild(section);
+
+    RevealMarkdown.initialize();
+    Reveal.navigateTo(pageNum, slideNum);
+  });
+}
+
+Reveal.addEventListener('ready', function() {
+  loadMarkdown(config.markdown, config.pageNum, config.slideNum);
 });
 
 Reveal.initialize({
@@ -55,15 +70,17 @@ Reveal.initialize({
   progress: true,
   history: true,
   center: true,
-  transition: "slide",
+  transition: 'slide',
   dependencies: [
     {
-      src: "/plugin/markdown/marked.js",
+      src: '/js/marked.js',
       callback: function() {
         var renderer = new marked.Renderer();
 
         renderer.image = function(href, title, text) {
-          return '<img data-src="' + href + '" alt="' + title + '" />';
+          return (
+            '<img data-src="/doc/' + currentName + '/' + href + '?v={{version}}" alt="' + title + '" />'
+          );
         };
 
         renderer.link = function(href, title, text) {
@@ -72,22 +89,22 @@ Reveal.initialize({
             href +
             '" target="_blank" rel="noopener noreferrer">' +
             text +
-            "</a>"
+            '</a>'
           );
         };
 
         marked.setOptions({ renderer: renderer });
       }
     },
-    { src: "/plugin/markdown/markdown.js" },
+    { src: '/js/markdown.js' },
     {
-      src: "/lib/js/classList.js",
+      src: '/js/classList.js',
       condition: function() {
         return !document.body.classList;
       }
     },
     {
-      src: "/plugin/highlight/highlight.js",
+      src: '/js/highlight.js',
       async: true,
       callback: function() {
         hljs.initHighlightingOnLoad();
