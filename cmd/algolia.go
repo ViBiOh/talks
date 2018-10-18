@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"path"
 	"regexp"
 
@@ -120,7 +119,7 @@ func main() {
 	if len(objects) == 0 {
 		logger.Fatal(`no search object`)
 	}
-	log.Printf(`%d objects found`, len(objects))
+	logger.Info(`%d objects found`, len(objects))
 
 	index := algoliaApp.client.InitIndex(algoliaApp.indexName)
 
