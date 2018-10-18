@@ -11,8 +11,6 @@ services:
     - X-UA-Compatible:ie=edge~content-language:fr
     - -env
     - ALGOLIA_APP,ALGOLIA_KEY,ALGOLIA_INDEX
-    - -tracingName
-    - talks
     labels:
       traefik.frontend.passHostHeader: 'true'
       traefik.frontend.rule: 'Host: talks.vibioh.fr'
