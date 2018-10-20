@@ -132,7 +132,7 @@ func main() {
 
 	output, err := index.AddObjects(objects)
 	if err != nil {
-		logger.Fatal(`%v`, errors.WithStack(err))
+		logger.Fatal(`%+v`, errors.WithStack(err))
 	}
 	logger.Info(`%d objects added to %s index`, len(output.ObjectIDs), algoliaApp.indexName)
 }
