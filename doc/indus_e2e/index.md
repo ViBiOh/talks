@@ -159,7 +159,7 @@ Gérer les A/B Tests proprement
 # Apprentissage
 
 
-* C'est casse-tête pour remplir un simple champ texte sur tous les navigateurs
+* C'est un casse-tête pour remplir un simple champ texte sur tous les navigateurs
 
 * C'est une culture à propager plutôt qu'un effort de code
 
