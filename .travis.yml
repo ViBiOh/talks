@@ -21,15 +21,13 @@ jobs:
       docker tag vibioh/talks:${TRAVIS_COMMIT} vibioh/talks:latest
       docker push vibioh/talks:latest
 
-  - stage: Build
+  - stage: Index
 
     language: go
     go: '1.10'
-    script: make algolia
-    after_success: |
-      if [ "${TRAVIS_BRANCH}" == "master" ]; then
-        ./index.sh
-      fi
+    script: |
+      make algolia
+      ./index.sh
 
   - stage: Deploy
 
@@ -47,6 +45,8 @@ jobs:
 stages:
   - Build
   - name: Publish
+    if: branch = master
+  - name: Index
     if: branch = master
   - name: Deploy
     if: branch = master
