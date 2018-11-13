@@ -39,59 +39,72 @@ L'intégralité de la *stack* applicative dans une configuration au plus proche 
 ![](browsers.png)
 
 
-### NightwatchJS
+![](nightwatch.png)
 
-* Simplification de la syntaxe Selenium
-* *Framework* "tout inclus"
+
+* Simplification de l'interface W3C WebDriver
+* *Framework* i.e. "tout inclus"
 * Facile à étendre
-
 
 > alternatives : `webdriver.io`, `CodeceptJS`
 
 
-`pages/Home.js`
-
-```
-module.exports = {
-    url: `${process.env.E2E_URL}/`,
-    commands: [],
-    elements: {
-        hero: '.home-hero',
-    },
-    sections: {},
-};
-```
+#### Page & Section
 
 
-`tests/HomeTest.js`
-
-```
-module.exports = {
-    before: function(browser) {
-        browser.maximizeWindow().deleteCookies();
-    },
-    'Page loads with analytics': function(browser) {
-        const Home = browser.page.Home();
-
-        Home.navigate().waitForElementVisible('body', browser.globals.pageLoadTimeout, true);
-        browser.compareScreenshot();
-
-        Home.expect.element('@hero').to.be.present;
-        browser.verify.ga('send', 'pageview');
-    },
-    after: browser => browser.end(),
-};
-```
+* Décrire sa page (url, éléments)
+    * Syntaxe des `querySelector`
+    * Ajout de variables utilisable lors des tests
+* Décrire les sections de la même façon
 
 
-### Docker avec Selenium
+[`pages/Home.js`](nightwatch_page.js)
+
+![](nightwatch_page.png)
+
+
+[`tests/HomeTest.js`](nightwatch_test.js)
+
+![](nightwatch_test.png)
+
+
+[`assertions/urlParameter.js`](nightwatch_assertion.js)
+
+![](nightwatch_assertion.png)
+
+
+[`commands/typeValue.js`](nightwatch_command.js)
+
+![](nightwatch_command.png)
+
+
+Autres commandes ajoutées
+
+* `backToFirstWindow`
+* `changeDispatcher`
+* `clearCookieBanner`
+* `compareScreenshot`
+* `goLastWindow`
+* `isResponsive`
+* `scrollToElement`
+* `signin`
+* `waitFor`
+
+
+![](docker.png)
+
 
 * Chrome et Firefox dans une *sandbox*
-* Contrôle via VNC
+* Debug via VNC
 
 ```
 open vnc://localhost:secret@localhost:5900
 ```
+
+
+* Permet de tester en tâche de fond
+* Permet de tester différentes tailles d'écran
+  * ⚠ version utilisée (`3.7` ok)
 
 
 ### Browserstack
@@ -103,6 +116,7 @@ open vnc://localhost:secret@localhost:5900
 ### CI Jenkins
 
 * Parallélisation maximale des tests avec Docker
+
 * Découpage des tests par fonctionnalités mais avec une approche durée d'exécution
   * Notre formulaire d'estimation est découpé en 5 fichiers de tests
 
@@ -118,6 +132,8 @@ Détection des régressions en *staging* plutôt qu'en production
 
 Moins de régression, moins de bugs bloquant
 
+Rédaction des tests d'après le cahier de recette
+
 
 Plus grosse confiance dans les déploiements
 
@@ -126,12 +142,14 @@ Plus grosse confiance dans les déploiements
 
 # Inconvénients
 
+> spoiler : infrastructure et coût
+
 
 Ce sont les tests les plus instables possibles.
 
-* environnement stable. *spoiler* : ça coute $$$
-* cas de tests stables mais pertinents
-* définir un *retry* pertinent
+* avoir un environnement stable et proche de la prod
+* avoir des cas de tests stables et pertinents
+* définir un *retry* pessimiste
 
 
 Lent même en parallélisant
@@ -140,9 +158,6 @@ Lent même en parallélisant
 * Environ 150 tests
 * 20 *jobs* en parallèle
 * Près de 2 000 vérifications effectuées
-
-
-Difficile d'avoir un taux de couverture
 
 
 Instabilité des navigateurs dans des conteneurs
@@ -156,15 +171,20 @@ Gérer les A/B Tests proprement
 
 
 
+# Est-ce que ça vaut le coup ?
+
+![](yes.gif)
+
+
 # Apprentissage
 
 
-* C'est un casse-tête pour remplir un simple champ texte sur tous les navigateurs
+* Les navigateurs ont chacun leur vision du monde, même via Selenium
+* Utilisez les **data-attribute** comme sélecteur
+
 
 * C'est une culture à propager plutôt qu'un effort de code
-
   * Modifier une API peut casser le site
-
   * Bumper une dépendance peut casser un comportement
 
 
@@ -173,15 +193,8 @@ Gérer les A/B Tests proprement
 * On peut tester plein de choses quand même (analytics, non-régression visuelle)
 
 
-* Vous pouvez vous en servir pour monitorer la prod
+Vous pouvez vous en servir pour monitorer la prod
 
-
-
-# Conclusion
-
-Est-ce que ça vaut le coût ?
-
-![](yes.gif)
 
 
 # Littérature
