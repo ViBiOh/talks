@@ -2,7 +2,7 @@
   "name": "talks",
   "version": "1.0.0",
   "description": "Talks of Vincent Boutour",
-  "main": "web/index.js",
+  "main": "www/js/index.js",
   "scripts": {
     "reveal:copy": "cp ./node_modules/reveal.js/lib/js/*.js www/vendor/",
     "reveal:css": "cat ./node_modules/reveal.js/css/reveal.css | cleancss -O2 -o www/vendor/reveal.css && cat ./node_modules/reveal.js/css/theme/night.css | grep -v -E \"^@import\" | grep -v -E \"font-family:.*?sans-serif\" | cleancss -O2 -o www/vendor/night.css && cat ./node_modules/reveal.js/lib/css/zenburn.css | cleancss -O2 -o www/vendor/zenburn.css && cat ./node_modules/reveal.js/css/print/paper.css | cleancss -O2 -o www/vendor/paper.css",
