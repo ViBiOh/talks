@@ -27,7 +27,7 @@ jobs:
     go: '1.10'
     script: |
       make algolia
-      ./index.sh
+      ./script/index.sh
 
   - stage: Deploy
 
