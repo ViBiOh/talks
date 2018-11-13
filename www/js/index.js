@@ -116,14 +116,13 @@ Promise.all([insertHeadScript(), insertRevealScript()])
             };
 
             renderer.link = function(href, title, text) {
+              var url = href;
+              if (!/^\//.test(href)) {
+                url = currentName + '/' + href;
+              }
+
               return (
-                '<a href="' +
-                currentName +
-                '/' +
-                href +
-                '" target="_blank" rel="noopener noreferrer">' +
-                text +
-                '</a>'
+                '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + text + '</a>'
               );
             };
 
