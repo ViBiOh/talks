@@ -11,5 +11,7 @@ curl -X DELETE \
 GIT_ROOT=`git rev-parse --show-cdup`
 
 for file in "${GIT_ROOT:-.}/www/doc/"*/index.md; do
-  "${GIT_ROOT:-.}/bin/algolia" -name `echo "${file}" | sed -e "s|^\./doc/\(.*\)/index\.md$|\1|"` -source "${file}" -app "${ALGOLIA_APP}" -key "${ALGOLIA_KEY}" -index "${ALGOLIA_INDEX}"
+  name=`python -c "import sys; import re; sys.stdout.write(re.compile('([^\/]+)\/index\.md$').search(sys.argv[1]).group(1))" "${file}"`
+
+  "${GIT_ROOT:-.}/bin/algolia" -name "${name}" -source "${file}" -app "${ALGOLIA_APP}" -key "${ALGOLIA_KEY}" -index "${ALGOLIA_INDEX}"
 done
