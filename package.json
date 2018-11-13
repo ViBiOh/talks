@@ -4,24 +4,13 @@
   "description": "Talks of Vincent Boutour",
   "main": "web/index.js",
   "scripts": {
-    "clean": "rm -rf ./dist && mkdir -p ./dist/doc/img && mkdir -p ./dist/js && mkdir -p ./dist/css && mkdir -p ./tmp",
-    "copy:robots": "cp ./web/robots.txt ./dist/",
-    "copy:sitemap": "cp ./web/sitemap.xml ./dist/",
-    "copy:favicon": "cp ./web/favicon/* ./dist/",
-    "copy:doc": "cp -R ./doc ./dist/",
-    "copy": "npm run copy:robots && npm run copy:sitemap && npm run copy:favicon && npm run copy:doc",
-    "reveal:copy": "cp ./node_modules/reveal.js/lib/js/*.js ./dist/js",
-    "reveal:css": "cat ./node_modules/reveal.js/css/reveal.css | cleancss -O2 -o ./dist/css/reveal.css && cat ./node_modules/reveal.js/css/theme/night.css | grep -v -E \"^@import\" | grep -v -E \"font-family:.*?sans-serif\" | cleancss -O2 -o ./dist/css/night.css && cat ./node_modules/reveal.js/lib/css/zenburn.css | cleancss -O2 -o ./dist/css/zenburn.css && cat ./node_modules/reveal.js/css/print/paper.css | cleancss -O2 -o ./dist/css/paper.css",
-    "reveal:js": "uglifyjs ./node_modules/reveal.js/plugin/markdown/markdown.js --compress --mangle --output ./dist/js/markdown.js && uglifyjs ./node_modules/reveal.js/plugin/markdown/marked.js --compress --mangle --output ./dist/js/marked.js && uglifyjs ./node_modules/reveal.js/plugin/highlight/highlight.js --compress --mangle --output ./dist/js/highlight.js && uglifyjs ./node_modules/reveal.js/js/reveal.js --compress --mangle --output ./dist/js/reveal.js",
-    "reveal": "npm run reveal:copy && npm run reveal:css && npm run reveal:js",
-    "js": "cat ./web/js/*.js | uglifyjs -c > ./tmp/index.js",
-    "style": "cat ./web/css/style.css | cleancss -O2 -o ./tmp/style.css",
-    "mustache": "./node_modules/js-index-builder/index.js -t \"web/*.html\" -b `git log --pretty=format:'%h' -n 1` -p \"web/partials/*.html\" -j ./tmp/index.js -c ./tmp/style.css -o ./tmp",
-    "minify:html": "html-minifier -o ./dist/index.html -c ./html-minifier.json ./tmp/index.html",
-    "minify": "npm run minify:html",
-    "build": "npm run clean && npm run copy && npm run reveal && npm run js && npm run style && npm run mustache && npm run minify",
-    "prestart": "go get github.com/ViBiOh/viws/cmd/viws",
-    "start": "viws -directory ${INIT_CWD}/dist -tls=false -spa -csp \"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'\""
+    "reveal:copy": "cp ./node_modules/reveal.js/lib/js/*.js www/vendor/",
+    "reveal:css": "cat ./node_modules/reveal.js/css/reveal.css | cleancss -O2 -o www/vendor/reveal.css && cat ./node_modules/reveal.js/css/theme/night.css | grep -v -E \"^@import\" | grep -v -E \"font-family:.*?sans-serif\" | cleancss -O2 -o www/vendor/night.css && cat ./node_modules/reveal.js/lib/css/zenburn.css | cleancss -O2 -o www/vendor/zenburn.css && cat ./node_modules/reveal.js/css/print/paper.css | cleancss -O2 -o www/vendor/paper.css",
+    "reveal:js": "uglifyjs ./node_modules/reveal.js/plugin/markdown/markdown.js --compress --mangle --output www/vendor/markdown.js && uglifyjs ./node_modules/reveal.js/plugin/markdown/marked.js --compress --mangle --output www/vendor/marked.js && uglifyjs ./node_modules/reveal.js/plugin/highlight/highlight.js --compress --mangle --output www/vendor/highlight.js && uglifyjs ./node_modules/reveal.js/js/reveal.js --compress --mangle --output www/vendor/reveal.js",
+    "reveal": "mkdir -p www/vendor && npm run reveal:copy && npm run reveal:css && npm run reveal:js",
+    "build": "script/ci.sh",
+    "prestart": "go get github.com/ViBiOh/viws/cmd/viws-light",
+    "start": "viws-light -directory ${INIT_CWD}/www -tls=false -spa -csp \"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'\""
   },
   "repository": {
     "type": "git",
@@ -38,15 +27,10 @@
   },
   "homepage": "https://github.com/ViBiOh/talks#readme",
   "dependencies": {
-    "reveal.js": "latest"
+    "reveal.js": "3.7.0"
   },
   "devDependencies": {
     "clean-css-cli": "4.2.1",
-    "glob": "7.1.3",
-    "html-minifier": "3.5.21",
-    "js-index-builder": "ViBiOh/js-index-builder",
-    "js-utils": "ViBiOh/js-utils",
-    "uglify-es": "3.3.9",
-    "yargs": "12.0.2"
+    "uglify-es": "3.3.9"
   }
 }
