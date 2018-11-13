@@ -6,6 +6,5 @@ node_modules/
 vendor/
 
 # Build
-dist/
-tmp/
+www/vendor/
 bin/
