@@ -58,22 +58,22 @@ L'intégralité de la *stack* applicative dans une configuration au plus proche 
 * Décrire les sections de la même façon
 
 
-[`pages/Home.js`](nightwatch_page.js)
+[`pages/Home.js`](/doc/indus_e2e/nightwatch_page.js)
 
 ![](nightwatch_page.png)
 
 
-[`tests/HomeTest.js`](nightwatch_test.js)
+[`tests/HomeTest.js`](/doc/indus_e2e/nightwatch_test.js)
 
 ![](nightwatch_test.png)
 
 
-[`assertions/urlParameter.js`](nightwatch_assertion.js)
+[`assertions/urlParameter.js`](/doc/indus_e2e/nightwatch_assertion.js)
 
 ![](nightwatch_assertion.png)
 
 
-[`commands/typeValue.js`](nightwatch_command.js)
+[`commands/typeValue.js`](/doc/indus_e2e/nightwatch_command.js)
 
 ![](nightwatch_command.png)
 
