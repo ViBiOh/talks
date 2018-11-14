@@ -10,9 +10,7 @@ module.exports = {
   sections: {
     Address: {
       selector: '[data-step-address]',
-      elements: {
-        zip: { selector: '#zip' },
-      },
+      elements: { zip: { selector: '#zip' } },
     },
   },
 };

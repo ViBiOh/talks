@@ -20,7 +20,7 @@
 
 ## Que teste-on ?
 
-L'intégralité de la *stack* applicative dans une configuration au plus proche de celle de production
+L'intégralité de la *stack* applicative dans une configuration et une utilisation au plus proche de la production.
 
 ![](popcorn.gif)
 
@@ -33,29 +33,39 @@ L'intégralité de la *stack* applicative dans une configuration au plus proche 
 
 ![](selenium-logo.png)
 
+* Open-source et proche du W3C
+* Très largement répandu
+* Produit mature
 
-> Pourquoi pas `cypress`, `puppeteer` ou `Ranorex` ?
+
+Pourquoi pas [`cypress`](https://docs.cypress.io/guides/guides/launching-browsers.html#Unsupported-Browsers) ou `puppeteer` ?
 
 ![](browsers.png)
 
 
-![](nightwatch.png)
+[![](nightwatch.png)](http://nightwatchjs.org)
 
 
 * Simplification de l'interface W3C WebDriver
 * *Framework* i.e. "tout inclus"
 * Facile à étendre
 
-> alternatives : `webdriver.io`, `CodeceptJS`
+
+Alternatives possibles
+
+* [`webdriver.io`](http://webdriver.io)
+* [`CodeceptJS`](https://codecept.io)
+* [`RobotFramework](http://robotframework.org)
 
 
-#### Page & Section
+#### NightwatchJS Key Feature : Page & Section
 
 
 * Décrire sa page (url, éléments)
     * Syntaxe des `querySelector`
-    * Ajout de variables utilisable lors des tests
+    * Ajout de variables utilisables lors des tests
 * Décrire les sections de la même façon
+* Utilisation très simple de ces références ensuite
 
 
 [`pages/EstimaForm.js`](/doc/indus_e2e/nightwatch_page.js)
@@ -81,20 +91,20 @@ L'intégralité de la *stack* applicative dans une configuration au plus proche 
 Autres commandes ajoutées
 
 * `backToFirstWindow`
+* `goToLastWindow`
 * `changeDispatcher`
 * `clearCookieBanner`
 * `compareScreenshot`
-* `goLastWindow`
 * `isResponsive`
 * `scrollToElement`
 * `signin`
 * `waitFor`
 
 
-![](docker.png)
+![](docker.png) & ![](selenium-logo.png)
 
 
-* Chrome et Firefox dans une *sandbox*
+* *Sandboxing* local de votre navigateur
 * Debug via VNC
 
 ```
@@ -104,13 +114,17 @@ open vnc://localhost:secret@localhost:5900
 
 * Permet de tester en tâche de fond
 * Permet de tester différentes tailles d'écran
-  * ⚠ version utilisée (`3.7` ok)
+  * ⚠ version utilisée, e.g. la `3.7` est ok
 
 
-### Browserstack
+[![](browserstack.png)](https://www.browserstack.com)
 
 * "Ferme" de navigateurs requêtables via Selenium
-* Plus lent que du local mais plus riche en possibilités
+* Plus lent que du local mais plus riche en navigateurs
+
+
+* Fourni un replay vidéo du test pour du debug
+* Le [Local Testing](https://www.browserstack.com/local-testing) offre la possibilité de router tout votre traffic par votre machine
 
 
 ### CI Jenkins
@@ -154,10 +168,11 @@ Ce sont les tests les plus instables possibles.
 
 Lent même en parallélisant
 
-* En moyenne 8 minutes
-* Environ 150 tests
-* 20 *jobs* en parallèle
-* Près de 2 000 vérifications effectuées
+* En moyenne **8 minutes**
+* Environ **150 tests**
+* Test **3 parcours utilisateur** critiques
+* **20 *jobs*** en parallèle
+* Près de **2 000 vérifications** effectuées
 
 
 Instabilité des navigateurs dans des conteneurs
@@ -200,9 +215,7 @@ Vous pouvez vous en servir pour monitorer la prod
 # Littérature
 
 * [Why e2e testing is important for your team ?](https://medium.freecodecamp.org/why-end-to-end-testing-is-important-for-your-team-cb7eb0ec1504)
-* [NightwatchJS](http://nightwatchjs.org)
 * [Google Testing Blog](https://testing.googleblog.com)
-* [TestPyramid by Martin Flower](https://martinfowler.com/bliki/TestPyramid.html)
 
 
 ## Merci
