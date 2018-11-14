@@ -101,7 +101,9 @@ Autres commandes ajoutées
 * `waitFor`
 
 
-![](docker.png) & ![](selenium-logo.png)
+![](docker.png)
+&
+![](selenium-logo.png)
 
 
 * *Sandboxing* local de votre navigateur
