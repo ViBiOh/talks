@@ -117,8 +117,8 @@ Promise.all([insertHeadScript(), insertRevealScript()])
 
             renderer.link = function(href, title, text) {
               var url = href;
-              if (!/^\//.test(href)) {
-                url = currentName + '/' + href;
+              if (!/^https?:\/\//.test(href)) {
+                url = '/doc/' + currentName + '/' + href;
               }
 
               return (
