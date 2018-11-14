@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	native_errors "errors"
 	"flag"
 	"fmt"
 	"io/ioutil"
 	"path"
 	"regexp"
+	"strings"
 
 	"github.com/ViBiOh/httputils/pkg/errors"
 	"github.com/ViBiOh/httputils/pkg/logger"
@@ -18,7 +20,7 @@ var (
 	// ErrIndexNotFound occurs when index is not found in List
 	ErrIndexNotFound = native_errors.New(`index not found`)
 
-	chapterTitleRegex = regexp.MustCompile(`#\s+(.*)`)
+	chapterTitleRegex = regexp.MustCompile(`^#\s+(.*)\s*`)
 	imgRegex          = regexp.MustCompile(`\[\]\((.*)\)`)
 	strongRegex       = regexp.MustCompile(`\*\*\s*([^*]*)\s*\*\*`)
 	italicRegex       = regexp.MustCompile(`\*\s*([^*]*)\s*\*`)
@@ -27,6 +29,8 @@ var (
 // App stores informations
 type App struct {
 	client    algoliasearch.Client
+	appName   string
+	appKey    string
 	indexName string
 
 	sep         *regexp.Regexp
@@ -37,8 +41,9 @@ type App struct {
 // NewApp creates new App from Flags' config
 func NewApp(config map[string]*string) *App {
 	return &App{
-		client:    algoliasearch.NewClient(*config[`app`], *config[`key`]),
-		indexName: *config[`index`],
+		appName:   strings.TrimSpace(*config[`app`]),
+		appKey:    strings.TrimSpace(*config[`key`]),
+		indexName: strings.TrimSpace(*config[`index`]),
 
 		sep:         regexp.MustCompile(fmt.Sprintf(`(?m)%s`, *config[`sep`])),
 		verticalSep: regexp.MustCompile(fmt.Sprintf(`(?m)%s`, *config[`vsep`])),
@@ -59,6 +64,11 @@ func Flags(prefix string) map[string]*string {
 	}
 }
 
+// Init algolia client
+func (a *App) Init() {
+	a.client = algoliasearch.NewClient(a.appName, a.appKey)
+}
+
 // GetSearchObjects transform input reveal file to algolia object
 func (a App) GetSearchObjects(name string) ([]algoliasearch.Object, error) {
 	content, err := ioutil.ReadFile(a.source)
@@ -68,13 +78,15 @@ func (a App) GetSearchObjects(name string) ([]algoliasearch.Object, error) {
 
 	objects := make([]algoliasearch.Object, 0)
 
-	var chapterName string
+	chapterName := name
 	var slideImg string
 	var keywords []string
 
 	contentStr := string(content)
 	for chapterNum, chapter := range a.sep.Split(contentStr, -1) {
-		chapterName = chapterTitleRegex.FindStringSubmatch(chapter)[1]
+		if title := chapterTitleRegex.FindStringSubmatch(chapter); len(title) > 1 {
+			chapterName = title[1]
+		}
 
 		for slideNum, slide := range a.verticalSep.Split(chapter, -1) {
 			slideImg = ``
@@ -107,6 +119,7 @@ func (a App) GetSearchObjects(name string) ([]algoliasearch.Object, error) {
 
 func main() {
 	algoliaConfig := Flags(``)
+	debug := flag.Bool(`debug`, false, `Debug output instead of sending them`)
 	name := flag.String(`name`, ``, `Name prepended`)
 	flag.Parse()
 
@@ -117,11 +130,22 @@ func main() {
 		logger.Fatal(`%+v`, errors.WithStack(err))
 	}
 
+	if *debug {
+		output, err := json.MarshalIndent(objects, ``, `  `)
+		if err != nil {
+			logger.Fatal(`%+v`, errors.WithStack(err))
+		}
+
+		logger.Info(`%s`, output)
+		return
+	}
+
 	if len(objects) == 0 {
 		logger.Fatal(`no search object`)
 	}
 	logger.Info(`%d objects found`, len(objects))
 
+	algoliaApp.Init()
 	index := algoliaApp.client.InitIndex(algoliaApp.indexName)
 
 	if _, err := index.SetSettings(algoliasearch.Map{

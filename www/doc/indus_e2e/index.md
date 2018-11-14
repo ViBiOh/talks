@@ -146,7 +146,7 @@ open vnc://localhost:secret@localhost:5900
 
 
 
-# Bénéfices
+## Bénéfices
 
 ![](bump.gif)
 
@@ -159,12 +159,17 @@ Moins de régression, moins de bugs bloquant
 Rédaction des tests d'après le cahier de recette
 
 
+> On va plus vite en production, la QA est plus rapide côté produit
+
+> Christopher Parola, Lead Product Manager
+
+
 Plus grosse confiance dans les déploiements
 
 > si c'est vert, c'est que c'est bon
 
 
-# Inconvénients
+## Inconvénients
 
 > spoiler : infrastructure et coût
 
@@ -196,12 +201,12 @@ Gérer les A/B Tests proprement
 
 
 
-# Est-ce que ça vaut le coup ?
+## Est-ce que ça vaut le coup ?
 
 ![](yes.gif)
 
 
-# Apprentissage
+## Apprentissage
 
 
 * Les navigateurs ont chacun leur vision du monde, même via Selenium
@@ -222,7 +227,7 @@ Vous pouvez vous en servir pour monitorer la prod
 
 
 
-# Littérature
+## Littérature
 
 * [Why e2e testing is important for your team ?](https://medium.freecodecamp.org/why-end-to-end-testing-is-important-for-your-team-cb7eb0ec1504)
 * [Google Testing Blog](https://testing.googleblog.com)
