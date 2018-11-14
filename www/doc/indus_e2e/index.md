@@ -55,7 +55,7 @@ Alternatives possibles
 
 * [`webdriver.io`](http://webdriver.io)
 * [`CodeceptJS`](https://codecept.io)
-* [`RobotFramework](http://robotframework.org)
+* [`RobotFramework`](http://robotframework.org)
 
 
 #### NightwatchJS Key Feature : Page & Section
@@ -68,22 +68,22 @@ Alternatives possibles
 * Utilisation très simple de ces références ensuite
 
 
-[`pages/EstimaForm.js`](/doc/indus_e2e/nightwatch_page.js)
+[`pages/EstimaForm.js`](nightwatch_page.js)
 
 ![](nightwatch_page.png)
 
 
-[`tests/EstimaFormTest.js`](/doc/indus_e2e/nightwatch_test.js)
+[`tests/EstimaFormTest.js`](nightwatch_test.js)
 
 ![](nightwatch_test.png)
 
 
-[`assertions/urlParameter.js`](/doc/indus_e2e/nightwatch_assertion.js)
+[`assertions/urlParameter.js`](nightwatch_assertion.js)
 
 ![](nightwatch_assertion.png)
 
 
-[`commands/typeValue.js`](/doc/indus_e2e/nightwatch_command.js)
+[`commands/typeValue.js`](nightwatch_command.js)
 
 ![](nightwatch_command.png)
 
@@ -102,7 +102,9 @@ Autres commandes ajoutées
 
 
 ![](docker.png)
+
 &
+
 ![](selenium-logo.png)
 
 
@@ -131,10 +133,13 @@ open vnc://localhost:secret@localhost:5900
 
 ### CI Jenkins
 
-* Parallélisation maximale des tests avec Docker
+* Parallélisation maximale des tests avec Docker, GCP et les pipelines
 
 * Découpage des tests par fonctionnalités mais avec une approche durée d'exécution
   * Notre formulaire d'estimation est découpé en 5 fichiers de tests
+
+
+![](jenkins_pipeline.png)
 
 
 
@@ -218,6 +223,7 @@ Vous pouvez vous en servir pour monitorer la prod
 
 * [Why e2e testing is important for your team ?](https://medium.freecodecamp.org/why-end-to-end-testing-is-important-for-your-team-cb7eb0ec1504)
 * [Google Testing Blog](https://testing.googleblog.com)
+* [Jenkins & GCP](https://cloud.google.com/solutions/using-jenkins-for-distributed-builds-on-compute-engine)
 
 
 ## Merci
