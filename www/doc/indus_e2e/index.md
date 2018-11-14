@@ -139,6 +139,9 @@ open vnc://localhost:secret@localhost:5900
   * Notre formulaire d'estimation est découpé en 5 fichiers de tests
 
 
+![](jenkins_e2e.png)
+
+
 ![](jenkins_pipeline.png)
 
 
