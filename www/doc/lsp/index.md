@@ -1,6 +1,6 @@
 # Language Server Protocol
 
-> Vincent Boutour
+[Vincent Boutour](https://vibioh.fr)
 
 
 ## Le problème 🤬

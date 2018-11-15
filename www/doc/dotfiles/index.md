@@ -1,6 +1,6 @@
 # `~/.dotfiles`
 
-> Vincent Boutour
+[Vincent Boutour](https://vibioh.fr)
 
 
 ## Pourquoi ?
