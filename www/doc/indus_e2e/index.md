@@ -1,8 +1,10 @@
-# Industrialisation des tests *end-to-end*
+# Industrialisation des tests fonctionnels
 
-> Vincent Boutour
+![](vibioh.png)
 
-> Front-end developper chez [MeilleursAgents](https://www.meilleursagents.com)
+[Vincent Boutour](https://vibioh.fr)
+
+> *Front-end developer* chez [MeilleursAgents](https://www.meilleursagents.com)
 
 
 
@@ -38,7 +40,7 @@ L'intégralité de la *stack* applicative dans une configuration et une utilisat
 * Produit mature
 
 
-Pourquoi pas [`cypress`](https://docs.cypress.io/guides/guides/launching-browsers.html#Unsupported-Browsers) ou `puppeteer` ?
+Pourquoi pas [`cypress`](https://docs.cypress.io/guides/guides/launching-browsers.html#Unsupported-Browsers) ou [`puppeteer`](https://pptr.dev) ?
 
 ![](browsers.png)
 

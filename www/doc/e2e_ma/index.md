@@ -1,6 +1,6 @@
 # Tests e2e chez MA
 
-> Vincent Boutour
+[Vincent Boutour](https://vibioh.fr)
 
 
 ## Comment ça marche
