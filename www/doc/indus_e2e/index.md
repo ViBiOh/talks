@@ -159,9 +159,9 @@ Moins de régression, moins de bugs bloquant
 Rédaction des tests d'après le cahier de recette
 
 
-> On va plus vite en production, la QA est plus rapide côté produit
+> « On va plus vite en production, la QA est plus rapide côté produit »
 
-> Christopher Parola, Lead Product Manager
+> [Christopher Parola](https://twitter.com/chrisparola), Lead Product Manager
 
 
 Plus grosse confiance dans les déploiements
@@ -223,8 +223,7 @@ Gérer les A/B Tests proprement
 * On peut tester plein de choses quand même (analytics, non-régression visuelle)
 
 
-Vous pouvez vous en servir pour monitorer la prod
-
+Vous pouvez vous en servir pour monitorer la prod ou vérifier que tout fonctionne.
 
 
 ## Littérature
