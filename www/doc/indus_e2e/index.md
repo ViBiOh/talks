@@ -80,7 +80,7 @@ Alternatives possibles
 ![](nightwatch_test.png)
 
 
-[`assertions/urlParameter.js`](nightwatch_assertion.js)
+[`assertions/elementsCount.js.js`](nightwatch_assertion.js)
 
 ![](nightwatch_assertion.png)
 
