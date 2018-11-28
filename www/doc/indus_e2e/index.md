@@ -12,7 +12,7 @@
 
 ![](test-pyramid.png)
 
-> [TestPyramid by Martin Flower](https://martinfowler.com/bliki/TestPyramid.html)
+> [TestPyramid by Martin Fowler](https://martinfowler.com/bliki/TestPyramid.html)
 
 
 ## Que veut-on tester ?
@@ -168,7 +168,7 @@ Rédaction des tests d'après le cahier de recette
 
 Plus grosse confiance dans les déploiements
 
-> si c'est vert, c'est que c'est bon
+> si c'est vert, c'est bon
 
 
 ## Inconvénients
@@ -211,7 +211,6 @@ Gérer les A/B Tests proprement
 ## Apprentissage
 
 
-* Les navigateurs ont chacun leur vision du monde, même via Selenium
 * Utilisez les **data-attribute** comme sélecteur
 
 
