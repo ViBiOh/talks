@@ -113,9 +113,12 @@ Autres commandes ajoutées
 * *Sandboxing* local de votre navigateur
 * Debug via VNC
 
+
 ```
 open vnc://localhost:secret@localhost:5900
 ```
+
+![](e2e.gif)
 
 
 * Permet de tester en tâche de fond
