@@ -1,6 +1,6 @@
 [[constraint]]
   name = "github.com/algolia/algoliasearch-client-go"
-  version = "2.21.3"
+  version = "2.25.0"
 
 [prune]
   go-tests = true
