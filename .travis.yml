@@ -5,10 +5,10 @@ jobs:
     sudo: required
     services:
     - docker
-    script: docker build -t vibioh/talks:`make version` --build-arg VERSION=`make version` .
+    script: docker build -t vibioh/talks:$(make version) --build-arg VERSION=$(make version) .
     after_success: |
       echo ${DOCKER_PASS} | docker login -u vibioh --password-stdin && \
-      docker push vibioh/talks:`make version`
+      docker push vibioh/talks:$(make version)
 
   - stage: Publish
 
@@ -17,8 +17,8 @@ jobs:
     - docker
     script: |
       echo ${DOCKER_PASS} | docker login -u vibioh --password-stdin
-      docker pull vibioh/talks:`make version`
-      docker tag vibioh/talks:`make version` vibioh/talks:latest
+      docker pull vibioh/talks:$(make version)
+      docker tag vibioh/talks:$(make version) vibioh/talks:latest
       docker push vibioh/talks:latest
 
   - stage: Index
