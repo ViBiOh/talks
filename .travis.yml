@@ -36,11 +36,12 @@ jobs:
         -e "s|\${ALGOLIA_APP}|${ALGOLIA_APP}|g" \
         -e "s|\${ALGOLIA_KEY}|${ALGOLIA_READ_ONLY_KEY}|g" \
         -e "s|\${ALGOLIA_INDEX}|${ALGOLIA_INDEX}|g" \
+        -e "s|\\\$|\$\$|g" \
         docker-compose.yml > docker-compose-env.yml
     deploy:
       provider: script
       skip_cleanup: true
-      script: 'curl -H "Authorization: GitHub ${GITHUB_OAUTH_TOKEN}" -X POST https://dashboard-api.vibioh.fr/deploy/talks/ --data-binary @docker-compose-env.yml'
+      script: 'curl -X POST -u "${DEPLOY_CREDENTIALS}" "https://deploy.vibioh.fr/?project=talks&version=$(make version)" --data-binary @docker-compose-env.yml'
 
 stages:
   - Build
