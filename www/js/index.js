@@ -48,7 +48,7 @@ function loadMarkdown(markdownFilename, pageNum, slideNum) {
 
     slides.appendChild(section);
 
-    RevealMarkdown.initialize();
+    RevealMarkdown.init();
     Reveal.navigateTo(pageNum, slideNum);
   });
 }
