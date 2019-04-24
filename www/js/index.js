@@ -48,8 +48,9 @@ function loadMarkdown(markdownFilename, pageNum, slideNum) {
 
     slides.appendChild(section);
 
-    RevealMarkdown.init();
-    Reveal.navigateTo(pageNum, slideNum);
+    RevealMarkdown.init().then(function() {
+      Reveal.navigateTo(pageNum, slideNum);
+    });
   });
 }
 
@@ -69,7 +70,69 @@ function insertRevealScript() {
   });
 }
 
-Promise.all([insertRevealScript()])
+/**
+ * Insert reveal marked script into dom.
+ * @return {Promise} Promise resolved when script is loaded
+ */
+function insertMarkedScript() {
+  return new Promise(resolve => {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = '/vendor/marked.js?v={{version}}';
+    script.async = 'true';
+    script.onload = resolve;
+
+    document.querySelector('head').appendChild(script);
+  });
+}
+
+/**
+ * Insert reveal markdown script into dom.
+ * @return {Promise} Promise resolved when script is loaded
+ */
+function insertMarkdownScript() {
+  return new Promise(resolve => {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = '/vendor/markdown.js?v={{version}}';
+    script.async = 'true';
+    script.onload = resolve;
+
+    document.querySelector('head').appendChild(script);
+  });
+}
+
+function getMarkedRenderer() {
+  var renderer = new marked.Renderer();
+  renderer.image = function(href, title, text) {
+    return (
+      '<img data-src="/doc/' +
+      currentName +
+      '/' +
+      href +
+      '?v={{version}}" alt="' +
+      title +
+      '" />'
+    );
+  };
+
+  renderer.link = function(href, title, text) {
+    var url = href;
+    if (!/^https?:\/\//.test(href)) {
+      url = '/doc/' + currentName + '/' + href;
+    }
+
+    return (
+      '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + text + '</a>'
+    );
+  };
+
+  return renderer;
+}
+
+insertRevealScript()
+  .then(insertMarkedScript)
+  .then(insertMarkdownScript)
   .then(function() {
     Reveal.addEventListener('ready', function() {
       loadMarkdown(config.markdown, config.pageNum, config.slideNum);
@@ -81,39 +144,10 @@ Promise.all([insertRevealScript()])
       history: true,
       center: true,
       transition: 'slide',
+      markdown: {
+        renderer: getMarkedRenderer(),
+      },
       dependencies: [
-        {
-          src: '/vendor/marked.js',
-          callback: function() {
-            var renderer = new marked.Renderer();
-
-            renderer.image = function(href, title, text) {
-              return (
-                '<img data-src="/doc/' +
-                currentName +
-                '/' +
-                href +
-                '?v={{version}}" alt="' +
-                title +
-                '" />'
-              );
-            };
-
-            renderer.link = function(href, title, text) {
-              var url = href;
-              if (!/^https?:\/\//.test(href)) {
-                url = '/doc/' + currentName + '/' + href;
-              }
-
-              return (
-                '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + text + '</a>'
-              );
-            };
-
-            marked.setOptions({ renderer: renderer });
-          },
-        },
-        { src: '/vendor/markdown.js' },
         {
           src: '/vendor/classList.js',
           condition: function() {
