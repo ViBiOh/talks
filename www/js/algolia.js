@@ -198,37 +198,6 @@ function algoliaHandleResultKey(e) {
 }
 
 /**
- * Insert algolia script into dom.
- * @return {Promise} Promise resolved when script is loaded
- */
-function insertAlgoliaScript() {
-  return new Promise(resolve => {
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js';
-    script.async = 'true';
-    script.onload = resolve;
-
-    document.querySelector('head').appendChild(script);
-  });
-}
-
-/**
- * Insert algolia style into dom.
- * @return {Promise} Promise resolved when style is loaded
- */
-function insertAlgoliaStyle() {
-  return new Promise(resolve => {
-    var style = document.createElement('link');
-    style.rel = 'stylesheet';
-    style.href = '/css/algolia.css?v={{version}}';
-    style.onload = resolve;
-
-    document.querySelector('head').appendChild(style);
-  });
-}
-
-/**
  * Insert search bar into the dom.
  */
 function insertAlgoliaDOM() {
@@ -256,33 +225,32 @@ function insertAlgoliaDOM() {
  * @param  {String} key       Search key
  * @param  {String} indexName Index name
  */
-function algoliaInit(app, key, indexName) {
+async function algoliaInit(app, key, indexName) {
   if (!app || !key || !indexName) {
     return;
   }
 
-  return Promise.all([insertAlgoliaScript(), insertAlgoliaStyle()])
-    .then(function() {
-      insertAlgoliaDOM();
-      var index = algoliaGetIndex(app, key, indexName);
+  await Promise.all([
+    addScript('https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js'),
+    addStyle('/css/algolia.css?v={{version}}'),
+  ]);
 
-      var searchBar = document.getElementById('search');
-      var results = document.getElementById('results');
+  insertAlgoliaDOM();
+  const index = algoliaGetIndex(app, key, indexName);
 
-      if (searchBar && results) {
-        algoliaHandleInput(index, searchBar, results);
-        algoliaAddActiveClass(searchBar);
+  const searchBar = document.getElementById('search');
+  const results = document.getElementById('results');
 
-        searchBar.addEventListener('keyup', algoliaHandleResultKey);
-        Reveal.addEventListener('slidechanged', function() {
-          algoliaClearInput(searchBar);
-          algoliaClearNode(results);
-        });
-      }
-    })
-    .catch(function(e) {
-      console.error(e);
+  if (searchBar && results) {
+    algoliaHandleInput(index, searchBar, results);
+    algoliaAddActiveClass(searchBar);
+
+    searchBar.addEventListener('keyup', algoliaHandleResultKey);
+    Reveal.addEventListener('slidechanged', function() {
+      algoliaClearInput(searchBar);
+      algoliaClearNode(results);
     });
+  }
 }
 
 fetch('/env')
