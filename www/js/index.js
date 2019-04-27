@@ -1,22 +1,68 @@
-var config = (function() {
-  var override = {
+/**
+ * Add a script to the dom.
+ * @return {Promise} Promise resolved when script is loaded
+ */
+async function addScript(src) {
+  return new Promise(resolve => {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = src;
+    script.async = 'true';
+    script.onload = resolve;
+
+    document.querySelector('head').appendChild(script);
+  });
+}
+
+/**
+ * Add a style to the dom.
+ * @return {Promise} Promise resolved when style is loaded
+ */
+async function addStyle(src) {
+  return new Promise(resolve => {
+    const style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = src;
+    style.onload = resolve;
+
+    document.querySelector('head').appendChild(style);
+  });
+}
+
+/**
+ * Insert reveal scripts into dom.
+ * @return {Promise} Promise resolved when script is loaded
+ */
+async function insertRevealScripts() {
+  await addScript('/vendor/reveal.js?v={{version}}');
+  await addScript('/vendor/marked.js?v={{version}}');
+  await addScript('/vendor/markdown.js?v={{version}}');
+}
+
+/**
+ * Get configuration for location.
+ * @return {Object} Configuration of talks
+ */
+function getConfig() {
+  const override = {
     markdown: 'whoami',
     pageNum: 0,
     slideNum: 0,
   };
 
-  window.location.pathname.replace(/([^/]+)/gim, function(match, markdown) {
+  window.location.pathname.replace(/([^/]+)/gim, (match, markdown) => {
     override.markdown = markdown;
   });
-  window.location.hash.replace(/\/([0-9]+)(?:\/([0-9]+))?$/gim, function(match, pageNum, slideNum) {
+
+  window.location.hash.replace(/\/([0-9]+)(?:\/([0-9]+))?$/gim, (match, pageNum, slideNum) => {
     override.pageNum = pageNum;
     override.slideNum = slideNum;
   });
 
   return override;
-})();
+}
 
-var currentName = '';
+let currentName = '';
 
 function removeAllChild(element) {
   while (element.firstChild) {
@@ -29,141 +75,77 @@ function getDocUrl(name) {
   return '/doc/' + name + '/index.md?v={{version}}';
 }
 
-function loadMarkdown(markdownFilename, pageNum, slideNum) {
+async function loadMarkdown(markdownFilename, pageNum, slideNum) {
   let docUrl = getDocUrl(markdownFilename);
 
-  fetch(docUrl, { method: 'HEAD' }).then(function(response) {
-    if (!response.ok) {
-      docUrl = getDocUrl('whoami');
-    }
+  const response = await fetch(docUrl, { method: 'HEAD' });
 
-    var slides = document.getElementsByClassName('slides')[0];
-    removeAllChild(slides);
+  if (!response.ok) {
+    docUrl = getDocUrl('whoami');
+  }
 
-    var section = document.createElement('section');
-    section.setAttribute('data-markdown', docUrl);
-    section.setAttribute('data-separator', '^\n\n\n');
-    section.setAttribute('data-separator-vertical', '^\n\n');
-    section.setAttribute('data-charset', 'utf-8');
+  const slides = document.getElementsByClassName('slides')[0];
+  removeAllChild(slides);
 
-    slides.appendChild(section);
+  const section = document.createElement('section');
+  section.setAttribute('data-markdown', docUrl);
+  section.setAttribute('data-separator', '^\n\n\n');
+  section.setAttribute('data-separator-vertical', '^\n\n');
+  section.setAttribute('data-charset', 'utf-8');
 
-    RevealMarkdown.init().then(function() {
-      Reveal.navigateTo(pageNum, slideNum);
-    });
-  });
-}
+  slides.appendChild(section);
 
-/**
- * Insert reveal script into dom.
- * @return {Promise} Promise resolved when script is loaded
- */
-function insertRevealScript() {
-  return new Promise(resolve => {
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = '/vendor/reveal.js?v={{version}}';
-    script.async = 'true';
-    script.onload = resolve;
-
-    document.querySelector('head').appendChild(script);
-  });
-}
-
-/**
- * Insert reveal marked script into dom.
- * @return {Promise} Promise resolved when script is loaded
- */
-function insertMarkedScript() {
-  return new Promise(resolve => {
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = '/vendor/marked.js?v={{version}}';
-    script.async = 'true';
-    script.onload = resolve;
-
-    document.querySelector('head').appendChild(script);
-  });
-}
-
-/**
- * Insert reveal markdown script into dom.
- * @return {Promise} Promise resolved when script is loaded
- */
-function insertMarkdownScript() {
-  return new Promise(resolve => {
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = '/vendor/markdown.js?v={{version}}';
-    script.async = 'true';
-    script.onload = resolve;
-
-    document.querySelector('head').appendChild(script);
-  });
+  await RevealMarkdown.init();
+  Reveal.navigateTo(pageNum, slideNum);
 }
 
 function getMarkedRenderer() {
-  var renderer = new marked.Renderer();
-  renderer.image = function(href, title, text) {
-    return (
-      '<img data-src="/doc/' +
-      currentName +
-      '/' +
-      href +
-      '?v={{version}}" alt="' +
-      title +
-      '" />'
-    );
-  };
+  const renderer = new marked.Renderer();
 
-  renderer.link = function(href, title, text) {
-    var url = href;
+  renderer.image = (href, title, text) =>
+    `<img data-src="/doc/${currentName}/${href}?v={{version}}" alt="${title}" />`;
+
+  renderer.link = (href, title, text) => {
+    let url = href;
     if (!/^https?:\/\//.test(href)) {
       url = '/doc/' + currentName + '/' + href;
     }
 
-    return (
-      '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + text + '</a>'
-    );
+    return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + text + '</a>';
   };
 
   return renderer;
 }
 
-insertRevealScript()
-  .then(insertMarkedScript)
-  .then(insertMarkdownScript)
-  .then(function() {
-    Reveal.addEventListener('ready', function() {
-      loadMarkdown(config.markdown, config.pageNum, config.slideNum);
-    });
+async function init() {
+  await insertRevealScripts();
 
-    Reveal.initialize({
-      controls: true,
-      progress: true,
-      history: true,
-      center: true,
-      transition: 'slide',
-      markdown: {
-        renderer: getMarkedRenderer(),
-      },
-      dependencies: [
-        {
-          src: '/vendor/classList.js',
-          condition: function() {
-            return !document.body.classList;
-          },
-        },
-        {
-          src: '/vendor/highlight.js',
-          async: true,
-          callback: function() {
-            hljs.initHighlightingOnLoad();
-          },
-        },
-      ],
-    });
-  })
-  .catch(function(e) {
-    console.error(e);
+  Reveal.addEventListener('ready', () => {
+    const config = getConfig();
+    loadMarkdown(config.markdown, config.pageNum, config.slideNum);
   });
+
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    transition: 'slide',
+    markdown: {
+      renderer: getMarkedRenderer(),
+    },
+    dependencies: [
+      {
+        src: '/vendor/classList.js',
+        condition: () => !document.body.classList,
+      },
+      {
+        src: '/vendor/highlight.js',
+        async: true,
+        callback: () => hljs.initHighlightingOnLoad(),
+      },
+    ],
+  });
+}
+
+init();
