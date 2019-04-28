@@ -30,6 +30,16 @@ async function addStyle(src) {
 }
 
 /**
+ * Remove all child node of an alement
+ * @param  {DOMNode} element Element to clear
+ */
+function removeAllChild(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+/**
  * Insert reveal scripts into dom.
  * @return {Promise} Promise resolved when script is loaded
  */
@@ -64,22 +74,26 @@ function getConfig() {
 
 let currentName = '';
 
-function removeAllChild(element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-}
-
+/**
+ * Get document URL for given name
+ * @param  {String} name Name of document
+ * @return {String}      Document URL
+ */
 function getDocUrl(name) {
   currentName = name;
-  return '/doc/' + name + '/index.md?v={{version}}';
+  return `/doc/${name}/index.md?v={{version}}`;
 }
 
+/**
+ * Load given markdown into Reveal
+ * @param  {String} markdownFilename Markdown name
+ * @param  {Number} pageNum          Page number
+ * @param  {NUmber} slideNum         Slider number
+ */
 async function loadMarkdown(markdownFilename, pageNum, slideNum) {
   let docUrl = getDocUrl(markdownFilename);
 
   const response = await fetch(docUrl, { method: 'HEAD' });
-
   if (!response.ok) {
     docUrl = getDocUrl('whoami');
   }
@@ -99,6 +113,10 @@ async function loadMarkdown(markdownFilename, pageNum, slideNum) {
   Reveal.navigateTo(pageNum, slideNum);
 }
 
+/**
+ * Get configured marked renderer.
+ * @return {marked.Renderer} Configured renderer
+ */
 function getMarkedRenderer() {
   const renderer = new marked.Renderer();
 
@@ -117,7 +135,7 @@ function getMarkedRenderer() {
   return renderer;
 }
 
-async function init() {
+(async () => {
   await insertRevealScripts();
 
   Reveal.addEventListener('ready', () => {
@@ -146,6 +164,4 @@ async function init() {
       },
     ],
   });
-}
-
-init();
+})();

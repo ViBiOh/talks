@@ -16,9 +16,9 @@ function algoliaGetIndex(app, key, name) {
  * @param  {DOMElement} results Container of results
  */
 function algoliaHandleInput(index, input, results) {
-  var changeTimeout;
+  let changeTimeout;
 
-  input.addEventListener('input', function(e) {
+  input.addEventListener('input', e => {
     clearTimeout(changeTimeout);
 
     if (e.target.value) {
@@ -35,9 +35,7 @@ function algoliaHandleInput(index, input, results) {
  * @return {Function}   Function to pass to event listener
  */
 function algoliaGetResultClickHandler(hit) {
-  return function() {
-    document.location.href = hit.url;
-  };
+  return () => (document.location.href = hit.url);
 }
 
 /**
@@ -47,7 +45,7 @@ function algoliaGetResultClickHandler(hit) {
  * @param  {DOMElement} results Container of results
  */
 function algoliaSearchQuery(index, query, results) {
-  index.search({ query, hitsPerPage: 5 }, function(err, output) {
+  index.search({ query, hitsPerPage: 5 }, (err, output) => {
     if (err) {
       console.error(err);
       algoliaShowMessage('(╯°□°）╯︵ ┻━┻', "C'est cassé !", 'algolia__results--error', results);
@@ -73,7 +71,7 @@ function algoliaSearchQuery(index, query, results) {
 function algoliaShowMessage(header, message, className, results) {
   algoliaClearNode(results);
 
-  var result = algoliaGenerateResult(header, message);
+  const result = algoliaGenerateResult(header, message);
   result.className = className;
 
   results.appendChild(result);
@@ -87,16 +85,16 @@ function algoliaShowMessage(header, message, className, results) {
  * @return {DOMElement}     Result to append
  */
 function algoliaGenerateResult(header, message) {
-  var content = document.createElement('span');
+  const content = document.createElement('span');
   content.innerHTML = message;
 
-  var chapter = document.createElement('strong');
+  const chapter = document.createElement('strong');
   chapter.innerHTML = header;
 
-  var headline = document.createElement('p');
+  const headline = document.createElement('p');
   headline.appendChild(chapter);
 
-  var li = document.createElement('li');
+  const li = document.createElement('li');
   li.appendChild(headline);
   li.appendChild(content);
 
@@ -111,14 +109,12 @@ function algoliaGenerateResult(header, message) {
 function algoliaShowResults(hits, results) {
   algoliaClearNode(results);
 
-  for (var i = 0; i < hits.length; i++) {
-    var hit = hits[i];
-
-    var result = algoliaGenerateResult(hit.chapter, hit._highlightResult.content.value);
+  hits.forEach(hit => {
+    let result = algoliaGenerateResult(hit.chapter, hit._highlightResult.content.value);
     result.addEventListener('click', algoliaGetResultClickHandler(hit));
 
     results.appendChild(result);
-  }
+  });
 
   algoliaAddActiveClass(results);
 }
@@ -157,13 +153,13 @@ function algoliaAddActiveClass(element) {
  * @param  {int} direction Direction 1, or -1 for reverse
  */
 function algoliaNavigateResults(direction) {
-  var selectedClass = 'selected';
+  const selectedClass = 'selected';
 
-  var results = document.querySelectorAll('.algolia__results li');
+  const results = document.querySelectorAll('.algolia__results li');
   if (results) {
-    for (var i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.length; i++) {
       if (results[i].classList.contains(selectedClass)) {
-        var next = i + direction;
+        const next = i + direction;
         if (next >= 0 && next < results.length) {
           results[i].classList.remove(selectedClass);
           results[next].classList.add(selectedClass);
@@ -174,7 +170,7 @@ function algoliaNavigateResults(direction) {
     }
   }
 
-  var result = document.querySelector('.algolia__results li');
+  const result = document.querySelector('.algolia__results li');
   if (result) {
     result.classList.add(selectedClass);
   }
@@ -190,7 +186,7 @@ function algoliaHandleResultKey(e) {
   } else if (e.keyCode === 38) {
     algoliaNavigateResults(-1);
   } else if (e.keyCode === 13) {
-    var selected = document.querySelector('.algolia__results li.selected');
+    const selected = document.querySelector('.algolia__results li.selected');
     if (selected) {
       selected.click();
     }
@@ -204,18 +200,18 @@ function insertAlgoliaDOM() {
   document.querySelector('body').insertAdjacentHTML(
     'beforeend',
     `
-    <div id="search" class="algolia">
-      <div class="algolia__input">
-        <svg viewBox="0 0 95 95" xmlns="http://www.w3.org/2000/svg" class="algolia__logo">
-          <title>Search by Algolia</title>
-          <path d="M0 12.37C0 5.54 5.532 0 12.367 0h69.31c6.831 0 12.368 5.533 12.368 12.37v69.331c0 6.832-5.532 12.371-12.367 12.371h-69.31C5.536 94.072 0 88.539 0 81.702V12.37zm48.125 11.405c-14.671 0-26.58 11.898-26.58 26.588 0 14.69 11.895 26.588 26.58 26.588 14.685 0 26.58-11.912 26.58-26.602S62.81 23.775 48.125 23.775zm0 45.307c-10.343 0-18.727-8.386-18.727-18.733 0-10.346 8.384-18.732 18.727-18.732 10.344 0 18.727 8.386 18.727 18.732 0 10.347-8.383 18.733-18.727 18.733zm0-33.6v13.955c0 .408.436.68.803.49L61.3 43.501a.548.548 0 0 0 .217-.762c-2.572-4.506-7.335-7.596-12.834-7.8a.549.549 0 0 0-.558.544zM30.76 25.246l-1.62-1.62a4.082 4.082 0 0 0-5.77 0l-1.933 1.933a4.085 4.085 0 0 0 0 5.773l1.606 1.606c.245.245.64.204.844-.068a30.572 30.572 0 0 1 3.116-3.662 29.723 29.723 0 0 1 3.689-3.131c.272-.19.3-.6.068-.83zm26.063-4.234v-3.226a4.078 4.078 0 0 0-4.083-4.084h-9.5a4.078 4.078 0 0 0-4.083 4.084v3.308c0 .368.354.626.708.531a29.562 29.562 0 0 1 8.275-1.157c2.722 0 5.403.367 7.989 1.075a.55.55 0 0 0 .694-.53z" fill="#FFF" fill-rule="evenodd"/>
-        </svg>
-        <input type="text" name="q" placeholder="Rechercher" aria-label="Rechercher" class="algolia__search" />
-      </div>
+<div id="search" class="algolia">
+  <div class="algolia__input">
+    <svg viewBox="0 0 95 95" xmlns="http://www.w3.org/2000/svg" class="algolia__logo">
+      <title>Search by Algolia</title>
+      <path d="M0 12.37C0 5.54 5.532 0 12.367 0h69.31c6.831 0 12.368 5.533 12.368 12.37v69.331c0 6.832-5.532 12.371-12.367 12.371h-69.31C5.536 94.072 0 88.539 0 81.702V12.37zm48.125 11.405c-14.671 0-26.58 11.898-26.58 26.588 0 14.69 11.895 26.588 26.58 26.588 14.685 0 26.58-11.912 26.58-26.602S62.81 23.775 48.125 23.775zm0 45.307c-10.343 0-18.727-8.386-18.727-18.733 0-10.346 8.384-18.732 18.727-18.732 10.344 0 18.727 8.386 18.727 18.732 0 10.347-8.383 18.733-18.727 18.733zm0-33.6v13.955c0 .408.436.68.803.49L61.3 43.501a.548.548 0 0 0 .217-.762c-2.572-4.506-7.335-7.596-12.834-7.8a.549.549 0 0 0-.558.544zM30.76 25.246l-1.62-1.62a4.082 4.082 0 0 0-5.77 0l-1.933 1.933a4.085 4.085 0 0 0 0 5.773l1.606 1.606c.245.245.64.204.844-.068a30.572 30.572 0 0 1 3.116-3.662 29.723 29.723 0 0 1 3.689-3.131c.272-.19.3-.6.068-.83zm26.063-4.234v-3.226a4.078 4.078 0 0 0-4.083-4.084h-9.5a4.078 4.078 0 0 0-4.083 4.084v3.308c0 .368.354.626.708.531a29.562 29.562 0 0 1 8.275-1.157c2.722 0 5.403.367 7.989 1.075a.55.55 0 0 0 .694-.53z" fill="#FFF" fill-rule="evenodd"/>
+    </svg>
+    <input type="text" name="q" placeholder="Rechercher" aria-label="Rechercher" class="algolia__search" />
+  </div>
 
-      <ol id="results" class="algolia__results"></ol>
-    </div>
-  `,
+  <ol id="results" class="algolia__results"></ol>
+</div>
+`,
   );
 }
 
@@ -226,10 +222,6 @@ function insertAlgoliaDOM() {
  * @param  {String} indexName Index name
  */
 async function algoliaInit(app, key, indexName) {
-  if (!app || !key || !indexName) {
-    return;
-  }
-
   await Promise.all([
     addScript('https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js'),
     addStyle('/css/algolia.css?v={{version}}'),
@@ -246,20 +238,20 @@ async function algoliaInit(app, key, indexName) {
     algoliaAddActiveClass(searchBar);
 
     searchBar.addEventListener('keyup', algoliaHandleResultKey);
-    Reveal.addEventListener('slidechanged', function() {
+    Reveal.addEventListener('slidechanged', () => {
       algoliaClearInput(searchBar);
       algoliaClearNode(results);
     });
   }
 }
 
-fetch('/env')
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(config) {
-    return algoliaInit(config.ALGOLIA_APP, config.ALGOLIA_KEY, config.ALGOLIA_INDEX);
-  })
-  .catch(function(e) {
-    console.error(e);
-  });
+(async () => {
+  const response = await fetch('/env');
+  const { ALGOLIA_APP: app, ALGOLIA_KEY: key, ALGOLIA_INDEX: indexName } = await response.json();
+
+  if (!app || !key || !indexName) {
+    return;
+  }
+
+  algoliaInit(app, key, indexName);
+})();
