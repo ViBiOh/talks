@@ -1,10 +1,4 @@
-# Node Package Manager
 node_modules/
 **/npm-debug.log
-
-# Golang
-vendor/
-
-# Build
 www/vendor/
 bin/
