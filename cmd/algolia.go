@@ -2,23 +2,21 @@ package main
 
 import (
 	"encoding/json"
-	native_errors "errors"
+	"errors"
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"path"
 	"regexp"
 	"strings"
 
-	"github.com/ViBiOh/httputils/pkg/errors"
-	"github.com/ViBiOh/httputils/pkg/logger"
-	"github.com/ViBiOh/httputils/pkg/tools"
 	"github.com/algolia/algoliasearch-client-go/algoliasearch"
 )
 
 var (
 	// ErrIndexNotFound occurs when index is not found in List
-	ErrIndexNotFound = native_errors.New("index not found")
+	ErrIndexNotFound = errors.New("index not found")
 
 	chapterTitleRegex = regexp.MustCompile(`^#\s+(.*)\s*`)
 	imgRegex          = regexp.MustCompile(`\[\]\((.*)\)`)
@@ -54,13 +52,13 @@ func NewApp(config map[string]*string) *App {
 // Flags adds flags for given prefix
 func Flags(prefix string) map[string]*string {
 	return map[string]*string{
-		"app":   flag.String(tools.ToCamel(fmt.Sprintf("%sApp", prefix)), "", "[algolia] App"),
-		"key":   flag.String(tools.ToCamel(fmt.Sprintf("%sKey", prefix)), "", "[algolia] Key"),
-		"index": flag.String(tools.ToCamel(fmt.Sprintf("%sIndex", prefix)), "", "[algolia] Index"),
+		"app":   flag.String("app", "", "[algolia] App"),
+		"key":   flag.String("key", "", "[algolia] Key"),
+		"index": flag.String("index", "", "[algolia] Index"),
 
-		"source": flag.String(tools.ToCamel(fmt.Sprintf("%sSource", prefix)), "", "[reveal] Markdown source"),
-		"sep":    flag.String(tools.ToCamel(fmt.Sprintf("%sSep", prefix)), "^\n\n\n", "[reveal] Separator"),
-		"vsep":   flag.String(tools.ToCamel(fmt.Sprintf("%sVerticalSep", prefix)), "^\n\n", "[reveal] Vertical separator"),
+		"source": flag.String("source", "", "[reveal] Markdown source"),
+		"sep":    flag.String("sep", "^\n\n\n", "[reveal] Separator"),
+		"vsep":   flag.String("verticalSep", "^\n\n", "[reveal] Vertical separator"),
 	}
 }
 
@@ -73,7 +71,7 @@ func (a *App) Init() {
 func (a App) GetSearchObjects(name string) ([]algoliasearch.Object, error) {
 	content, err := ioutil.ReadFile(a.source)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, err
 	}
 
 	objects := make([]algoliasearch.Object, 0)
@@ -127,23 +125,23 @@ func main() {
 
 	objects, err := algoliaApp.GetSearchObjects(*name)
 	if err != nil {
-		logger.Fatal("%+v", errors.WithStack(err))
+		log.Fatalf("%+v", err)
 	}
 
 	if *debug {
 		output, err := json.MarshalIndent(objects, "", "  ")
 		if err != nil {
-			logger.Fatal("%+v", errors.WithStack(err))
+			log.Fatalf("%+v", err)
 		}
 
-		logger.Info("%s", output)
+		log.Printf("%s\n", output)
 		return
 	}
 
 	if len(objects) == 0 {
-		logger.Fatal("no search object")
+		log.Fatalf("no search object")
 	}
-	logger.Info("%d objects found", len(objects))
+	log.Printf("%d objects found\n", len(objects))
 
 	algoliaApp.Init()
 	index := algoliaApp.client.InitIndex(algoliaApp.indexName)
@@ -151,12 +149,12 @@ func main() {
 	if _, err := index.SetSettings(algoliasearch.Map{
 		"searchableAttributes": []string{"keywords", "img", "content"},
 	}); err != nil {
-		logger.Fatal("%+v", errors.WithStack(err))
+		log.Fatalf("%+v", err)
 	}
 
 	output, err := index.AddObjects(objects)
 	if err != nil {
-		logger.Fatal("%+v", errors.WithStack(err))
+		log.Fatalf("%+v", err)
 	}
-	logger.Info("%d objects added to %s index", len(output.ObjectIDs), algoliaApp.indexName)
+	log.Printf("%d objects added to %s index\n", len(output.ObjectIDs), algoliaApp.indexName)
 }
