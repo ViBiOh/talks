@@ -43,7 +43,7 @@ jobs:
     deploy:
       provider: script
       skip_cleanup: true
-      script: bash script/deploy "https://deploy.vibioh.fr/talks/$(make version)" "@docker-compose-env.yml"
+      script: bash script/deploy talks "$(make version)" "@docker-compose-env.yml"
 
 stages:
   - Build

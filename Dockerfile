@@ -1,11 +1,10 @@
 FROM node:11 as builder
 
-ARG VERSION
-ENV WORKDIR /usr/src/app
 ENV CI true
 
-WORKDIR ${WORKDIR}
-COPY ./ ${WORKDIR}/
+ARG VERSION
+WORKDIR /usr/src/app
+COPY . .
 
 RUN npm ci \
  && npm run reveal \
@@ -18,4 +17,6 @@ RUN npm ci \
 
 FROM vibioh/viws:light
 
+ARG VERSION
+ENV VERSION=${VERSION}
 COPY --from=builder /app/www/ /www/
