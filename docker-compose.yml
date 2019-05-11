@@ -6,7 +6,7 @@ services:
     command:
     - -spa
     - -csp
-    - default-src 'self'; base-uri 'self'; script-src 'self' cdn.jsdelivr.net/algoliasearch/3/; connect-src 'self' *.algolia.net *.algolianet.com
+    - default-src 'self'; base-uri 'self'; script-src 'self' cdn.jsdelivr.net/algoliasearch/3/; style-src 'self' 'unsafe-inline'; connect-src 'self' *.algolia.net *.algolianet.com
     - -headers
     - X-UA-Compatible:ie=edge~content-language:fr
     - -env
