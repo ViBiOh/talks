@@ -5,21 +5,21 @@ jobs:
     sudo: required
     services:
     - docker
-    script: docker build -t vibioh/talks:$(make version) --build-arg VERSION=$(make version) .
-    after_success: |
-      echo ${DOCKER_PASS} | docker login -u vibioh --password-stdin && \
-      docker push vibioh/talks:$(make version)
+    script: docker build --build-arg "VERSION=$(make version)" -t "vibioh/talks:$(make version)" .
+    after_success:
+    - echo "${DOCKER_PASS}" | docker login -u vibioh --password-stdin
+    - docker push vibioh/talks:$(make version)
 
   - stage: Publish
 
     sudo: required
     services:
     - docker
-    script: |
-      echo ${DOCKER_PASS} | docker login -u vibioh --password-stdin
-      docker pull vibioh/talks:$(make version)
-      docker tag vibioh/talks:$(make version) vibioh/talks:latest
-      docker push vibioh/talks:latest
+    script:
+    - echo "${DOCKER_PASS}" | docker login -u vibioh --password-stdin
+    - docker pull "vibioh/talks:$(make version)"
+    - docker tag "vibioh/talks:$(make version)" "vibioh/talks:latest"
+    - docker push "vibioh/talks:latest"
 
   - stage: Index
 
@@ -27,9 +27,9 @@ jobs:
     go: '1.12'
     env:
     - GO111MODULE=on
-    script: |
-      make algolia
-      ./script/index.sh
+    script:
+    - make algolia
+    - ./script/index.sh
 
   - stage: Deploy
 
