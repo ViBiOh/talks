@@ -138,8 +138,8 @@ function getMarkedRenderer() {
 (async () => {
   await insertRevealScripts();
 
+  const config = getConfig();
   Reveal.addEventListener('ready', () => {
-    const config = getConfig();
     loadMarkdown(config.markdown, config.pageNum, config.slideNum);
   });
 
