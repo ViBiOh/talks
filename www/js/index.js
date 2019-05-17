@@ -160,7 +160,6 @@ function getMarkedRenderer() {
       {
         src: '/vendor/highlight.js',
         async: true,
-        callback: () => hljs.initHighlightingOnLoad(),
       },
     ],
   });
