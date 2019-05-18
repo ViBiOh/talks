@@ -6,6 +6,9 @@ PACKAGES ?= ./...
 GOBIN=bin
 BINARY_PATH=$(GOBIN)/$(APP_NAME)
 
+.DEFAULT_GOAL := app
+
+## help: Display list of commands
 .PHONY: help
 help: Makefile
 	@sed -n 's|^##||p' $< | column -t -s ':' | sed -e 's|^| |'
@@ -46,7 +49,7 @@ deps:
 	go get golang.org/x/tools/cmd/goimports
 
 ## format: Format code of app
-.PHONE: format
+.PHONY: format
 format:
 	goimports -w **/*.go
 	gofmt -s -w **/*.go
