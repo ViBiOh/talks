@@ -10,9 +10,9 @@ BINARY_PATH=$(GOBIN)/$(APP_NAME)
 help: Makefile
 	@sed -n 's|^##||p' $< | column -t -s ':' | sed -e 's|^| |'
 
-## $(APP_NAME): Build app with dependencies download
-.PHONY: $(APP_NAME)
-$(APP_NAME): deps go
+## app: Build app with dependencies download
+.PHONY: app
+app: deps go
 
 ## go: Build app
 .PHONY: go
