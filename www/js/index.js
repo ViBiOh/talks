@@ -126,10 +126,10 @@ function getMarkedRenderer() {
   renderer.link = (href, title, text) => {
     let url = href;
     if (!/^https?:\/\//.test(href)) {
-      url = '/doc/' + currentName + '/' + href;
+      url = `/doc/${currentName}/${href}`;
     }
 
-    return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + text + '</a>';
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
   };
 
   return renderer;
