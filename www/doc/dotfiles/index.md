@@ -18,6 +18,11 @@ Avoir une configuration documentée quelque part, facile à partager.
 Éviter le [_configuration snowflake_](https://martinfowler.com/bliki/SnowflakeServer.html).
 
 
+Scripter mon environnement de développement.
+
+_ Infrastructure as code_
+
+
 ![](cat_fail.gif)
 
 Être résilient face au crash d'une machine.
@@ -27,35 +32,37 @@ Avoir une configuration documentée quelque part, facile à partager.
 
 ## Quoi ?
 
+
+### Fichiers de configuration `.file`
+
 * `.bashrc` / `.tmux.conf`
 * `.gitconfig` / `.gitignore_global`
 * `.curlrc` / `.vimrc` / `.npmrc` / etc.
-* Snippets et Configuration éditeur de texte (Sublime & VsCode)
 
 
-### Mais aussi
+### Outils
 
-* Completion (e.g. `bash-completion`, `git-completion`, `pass-completion`)
-* Fuzzy finder dans le `bash_history`, a.k.a. `fzf`
+* Fuzzy-finder dans le terminal `fzf`
 * `$PS1` avec couleurs, affichage de la branche, suppression des *paths* trop longs
+* Snippets et configuration éditeur de texte
 
 
-### Mais encore
+### Productivité
 
-* alias pour le `golang`, `npm`, applications dockerisées
-* Et tous les outils du quotidien (`tldr`, `pgcli`, `wuzz`, etc.)
+* Completions (e.g. `bash`, `git`, `pass`, `pgcli`, etc.)
+* Alias des commandes usuelles pour le `golang`, `js`, `docker`, etc.
 
 
 ## Où ?
 
 Un repo Git sur lequel stocker tous les fichiers.
 
-Les branches permettent de gérer des configurations distinctes (e.g. `master` vs `ma`).
+Les branches permettent de gérer des configurations distinctes (e.g. `master` vs `work`).
 
 
 ## Comment ?
 
-Un mix entre des *symlinks* et des fichiers sourcés au démarrage du `shell`.
+Un mix entre des *symlinks*, des fichiers sourcés au démarrage du `shell` et des scripts d'installation.
 
 ![](science_clap.gif)
 
