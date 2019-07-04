@@ -20,7 +20,7 @@ Avoir une configuration documentée quelque part, facile à partager.
 
 Scripter mon environnement de développement.
 
-_ Infrastructure as code_
+*Infrastructure as code*
 
 
 ![](cat_fail.gif)
@@ -70,65 +70,25 @@ Un mix entre des *symlinks*, des fichiers sourcés au démarrage du `shell` et d
 Un _snippet_ de démarrage et un script d'installation sont les bienvenus, idéalement idempotents.
 
 ```bash
-mkdir -p ${HOME}/code/src/github.com/ViBiOh/
-cd ${HOME}/code/src/github.com/ViBiOh/
+mkdir -p ${HOME}/code
+cd ${HOME}/code
 git clone git@github.com:ViBiOh/dotfiles.git
 ./dotfiles/install.sh
 ```
 
 
-## Utilisation
-
-> Quels sont les ports ouverts sur la machine ?
-
-
-> Sur macOS
-
-```bash
-vboutour@MacBook-ViBiOh ~ open_ports
-COMMAND   PID     USER NODE NAME
-rapportd  327 vboutour  TCP *:53754 (LISTEN)
-rapportd  327 vboutour  TCP *:53754 (LISTEN)
-cupsd    2857     root  TCP [::1]:631 (LISTEN)
-cupsd    2857     root  TCP 127.0.0.1:631 (LISTEN)
-```
-
-
-> Sur CoreOS
-
-```bash
-vibioh@docker-mark-i ~ open_ports 
-Active Internet connections (only servers)
-Proto Local Address           PID/Program name
-tcp6  :::80                   858/dockerd
-tcp6  :::22                   1/systemd
-tcp6  :::443                  858/dockerd
-udp   163.172.36.243:68       829/systemd-network
-udp   10.91.132.248:68        829/systemd-network
-udp6  fe80::207:cbff:fe03:546 829/systemd-network
-```
-
-
-> Comment synchroniser mon local avec le serveur dev ?
-
-```bash
-git_sync dev meilleursagents
-```
-
-`rsync` uniquement des modifications. Les deux dossiers doivent partir du même état git.
-
-On peut également coupler cela à `fswatch` pour synchroniser à chaque modification de fichiers.
+Pour mettre à jour l'environnement ou les outils, relancer le script d'installation.
 
 
 ## Cool Things
 
 ```bash
-vboutour@MacBook-ViBiOh ~ meteo
+vibioh@macbook ~ meteo
 ```
 
 ```bash
 Error: sudo required
-vboutour@MacBook-ViBiOh ~ fuck
+vibioh@macbook ~ fuck
 ```
 
 
