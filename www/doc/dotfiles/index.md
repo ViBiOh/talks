@@ -70,8 +70,8 @@ Un mix entre des *symlinks*, des fichiers sourcés au démarrage du `shell` et d
 Un _snippet_ de démarrage et un script d'installation sont les bienvenus, idéalement idempotents.
 
 ```bash
-mkdir -p ${HOME}/code
-cd ${HOME}/code
+mkdir -p "${HOME}/code"
+cd "${HOME}/code"
 git clone git@github.com:ViBiOh/dotfiles.git
 ./dotfiles/install.sh
 ```
@@ -82,7 +82,7 @@ Pour mettre à jour l'environnement ou les outils, relancer le script d'installa
 
 ## Cool Things
 
-```bash
+```
 vibioh@macbook ~ meteo
 ```
 
