@@ -13,7 +13,7 @@ RUN npm ci \
  && sed -i -e "s|{{version}}|${APP_VERSION}|g" /usr/src/app/www/js/index.js \
  && sed -i -e "s|{{version}}|${APP_VERSION}|g" /usr/src/app/www/js/algolia.js
 
-FROM vibioh/viws:latest
+FROM vibioh/viws:light
 
 ARG APP_VERSION
 ENV VERSION=${APP_VERSION}
