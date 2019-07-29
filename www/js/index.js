@@ -111,6 +111,10 @@ async function loadMarkdown(markdownFilename, pageNum, slideNum) {
 
   await RevealMarkdown.init();
   Reveal.navigateTo(pageNum, slideNum);
+
+  document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
 }
 
 /**
@@ -159,7 +163,6 @@ function getMarkedRenderer() {
       },
       {
         src: '/vendor/highlight.js',
-        async: true,
       },
     ],
   });
