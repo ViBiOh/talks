@@ -12,14 +12,18 @@ services:
     - -env
     - ALGOLIA_APP,ALGOLIA_KEY,ALGOLIA_INDEX
     labels:
-      traefik.frontend.passHostHeader: 'true'
-      traefik.frontend.rule: 'Host: talks.vibioh.fr'
-      traefik.protocol: 'http'
-      traefik.port: '1080'
-      traefik.frontend.rateLimit.extractorFunc: 'client.ip'
-      traefik.frontend.rateLimit.rateSet.first.period: '60s'
-      traefik.frontend.rateLimit.rateSet.first.average: '100'
-      traefik.frontend.rateLimit.rateSet.first.burst: '200'
+      traefik.http.routers.talks-http.rule: Host(`talks.vibioh.fr`)
+      traefik.http.routers.talks-http.entrypoints: http
+      traefik.http.routers.talks-http.middlewares: redirect@file
+      traefik.http.routers.talks-https.rule: Host(`talks.vibioh.fr`)
+      traefik.http.routers.talks-https.entrypoints: https
+      traefik.http.routers.talks-https.middlewares: compress@file
+      traefik.http.routers.talks-https.tls: true
+      traefik.http.routers.talks-https.tls.certResolver: default
+      traefik.http.services.talks-service.loadbalancer.passhostheader: true
+      traefik.http.services.talks-service.loadbalancer.server.port: '1080'
+      traefik.http.middlewares.talks-rate-limit.ratelimit.average: '10'
+      traefik.http.middlewares.talks-rate-limit.ratelimit.burst: '50'
     environment:
       ALGOLIA_APP: ${ALGOLIA_APP}
       ALGOLIA_KEY: ${ALGOLIA_KEY}
