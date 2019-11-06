@@ -71,10 +71,9 @@ Un _snippet_ de démarrage et un script d'installation sont les bienvenus, idéa
 
 ```bash
 mkdir -p "${HOME}/code"
-pushd "${HOME}/code"
+cd "${HOME}/code"
 git clone git@github.com:ViBiOh/dotfiles.git
-./dotfiles/init.sh
-popd
+./dotfiles/init
 ```
 
 
