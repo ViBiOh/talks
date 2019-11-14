@@ -3,23 +3,24 @@ jobs:
   - stage: Build
 
     sudo: required
+    language: minimal
     services:
     - docker
-    script: docker build --build-arg "APP_VERSION=$(make version)" -t "vibioh/talks:$(make version)" .
+    script: docker build --build-arg "APP_VERSION=$(make version)" -t "${DOCKER_USER}/talks:$(make version)" .
     after_success:
-    - echo "${DOCKER_PASS}" | docker login -u vibioh --password-stdin
-    - docker push vibioh/talks:$(make version)
+    - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
+    - docker push "${DOCKER_USER}/talks:$(make version)"
 
   - stage: Publish
 
     sudo: required
+    language: minimal
     services:
     - docker
     script:
-    - echo "${DOCKER_PASS}" | docker login -u vibioh --password-stdin
-    - docker pull "vibioh/talks:$(make version)"
-    - docker tag "vibioh/talks:$(make version)" "vibioh/talks:latest"
-    - docker push "vibioh/talks:latest"
+    - echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
+    - curl -q -sSL --max-time 10 "https://raw.githubusercontent.com/ViBiOh/scripts/master/bootstrap" | bash -s "docker_promote"
+    - scripts/docker_promote "${DOCKER_USER}/talks" "$(make version)"
 
   - stage: Index
 
@@ -33,6 +34,7 @@ jobs:
 
   - stage: Deploy
 
+    language: minimal
     script: |
       sed \
         -e "s|\${ALGOLIA_APP}|${ALGOLIA_APP}|g" \
@@ -40,10 +42,8 @@ jobs:
         -e "s|\${ALGOLIA_INDEX}|${ALGOLIA_INDEX}|g" \
         -e "s|\\\$|\$\$|g" \
         docker-compose.yml > docker-compose-env.yml
-    deploy:
-      provider: script
-      skip_cleanup: true
-      script: bash script/deploy talks "@docker-compose-env.yml"
+      curl -q -sSL --max-time 10 "https://raw.githubusercontent.com/ViBiOh/scripts/master/bootstrap" | bash -s "deploy"
+      scripts/deploy talks "@docker-compose-env.yml"
 
 stages:
   - Build
