@@ -1,5 +1,10 @@
 SHELL = /bin/bash
 
+ifneq ("$(wildcard .env)","")
+	include .env
+	export
+endif
+
 APP_NAME = algolia
 PACKAGES ?= ./...
 
@@ -44,6 +49,7 @@ author:
 ## deps: Download dependencies
 .PHONY: deps
 deps:
+	@curl -q -sSL --max-time 10 "https://raw.githubusercontent.com/ViBiOh/scripts/master/bootstrap" | bash -s "git_hooks"
 	go get github.com/kisielk/errcheck
 	go get golang.org/x/lint/golint
 	go get golang.org/x/tools/cmd/goimports
