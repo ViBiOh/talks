@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ViBiOh/talks.svg?branch=master)](https://travis-ci.org/ViBiOh/talks)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ViBiOh/talks)](https://dependabot.com)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ViBiOh_talks&metric=alert_status)](https://sonarcloud.io/dashboard?id=ViBiOh_talks)
 
 ## Thanks
 
