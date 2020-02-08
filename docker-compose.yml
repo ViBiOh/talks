@@ -12,7 +12,7 @@ services:
       traefik.http.routers.talks-https.rule: Host(`talks.vibioh.fr`)
       traefik.http.routers.talks-https.entrypoints: https
       traefik.http.routers.talks-https.middlewares: compress@file, web-limit@file
-      traefik.http.routers.talks-https.tls: true
+      traefik.http.routers.talks-https.tls: "true"
       traefik.http.routers.talks-https.tls.certresolver: default
       traefik.http.services.talks-service.loadbalancer.server.port: "1080"
     environment:
