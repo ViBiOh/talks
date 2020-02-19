@@ -3,13 +3,14 @@
 jobs:
   include:
     - stage: Build
-
       language: go
       go: 1.13
       services:
         - docker
       before_install:
         - nvm install 13
+        - echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json
+        - sudo systemctl restart docker
       script:
         - npm ci
         - npm run reveal
