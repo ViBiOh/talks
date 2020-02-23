@@ -7,4 +7,5 @@ ENV VIWS_SPA true
 
 ARG VERSION
 ENV VERSION=${VERSION}
+
 COPY www/ /www/
