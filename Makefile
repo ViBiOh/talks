@@ -8,42 +8,30 @@ endif
 APP_NAME = algolia
 PACKAGES ?= ./...
 
-MAIN_BINARY = bin/$(APP_NAME)
-
 .DEFAULT_GOAL := app
 
 ## help: Display list of commands
 .PHONY: help
 help: Makefile
-	@sed -n 's|^##||p' $< | column -t -s ':' | sed -e 's|^| |'
+	@sed -n 's|^##||p' $< | column -t -s ':' | sort
 
-## app: Build app with dependencies download
+## app: Build whole app
 .PHONY: app
-app: deps go
+app: deps dev
 
-## go: Build app
-.PHONY: go
-go: format lint build
+## dev: Build app
+.PHONY: dev
+dev: format lint build
 
 ## name: Output name of app
 .PHONY: name
 name:
 	@echo -n $(APP_NAME)
 
-## dist: Output build output path
-.PHONY: dist
-dist:
-	@echo -n $(MAIN_BINARY)
-
 ## version: Output sha1 of last commit
 .PHONY: version
 version:
 	@echo -n $(shell git rev-parse --short HEAD)
-
-## author: Output author's name of last commit
-.PHONY: author
-author:
-	@python -c 'import sys; import urllib; sys.stdout.write(urllib.quote_plus(sys.argv[1]))' "$(shell git log --pretty=format:'%an' -n 1)"
 
 ## deps: Download dependencies
 .PHONY: deps
@@ -54,7 +42,7 @@ deps:
 	go get golang.org/x/tools/cmd/goimports
 	go mod tidy
 
-## format: Format code of app
+## format: Format code. e.g Prettier (js), format (golang)
 .PHONY: format
 format:
 	goimports -w **/*.go
@@ -67,7 +55,7 @@ lint:
 	errcheck -ignoretests $(PACKAGES)
 	go vet $(PACKAGES)
 
-## build: Build binary of app
+## build: Build the application.
 .PHONY: build
 build:
-	CGO_ENABLED=0 go build -ldflags="-s -w" -installsuffix nocgo -o $(MAIN_BINARY) cmd/algolia.go
+	CGO_ENABLED=0 go build -ldflags="-s -w" -installsuffix nocgo -o bin/$(APP_NAME) cmd/algolia.go
