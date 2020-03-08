@@ -1,6 +1,6 @@
 module github.com/ViBiOh/talks
 
-go 1.13
+go 1.14
 
 require (
 	github.com/algolia/algoliasearch-client-go v0.0.0-20190410134636-b60482b18fd9
