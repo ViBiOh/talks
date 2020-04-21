@@ -1,0 +1,35 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: talks-http
+spec:
+  entryPoints:
+    - http
+  routes:
+    - match: Host(`talks.vibioh.fr`)
+      kind: Rule
+      middlewares:
+        - name: redirect
+      services:
+        - name: talks
+          port: 80
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: talks-https
+spec:
+  entryPoints:
+    - https
+  routes:
+    - match: Host(`talks.vibioh.fr`)
+      kind: Rule
+      middlewares:
+        - name: ratelimit
+      services:
+        - name: talks
+          port: 80
+  tls:
+    certResolver: default
