@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: talks
+spec:
+  selector:
+    matchLabels:
+      name: talks
+  template:
+    metadata:
+      labels:
+        name: talks
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/scheme: http
+        prometheus.io/port: "1080"
+    spec:
+      containers:
+        - name: talks
+          image: vibioh/talks
+          envFrom:
+            - secretRef:
+                name: talks
+          ports:
+            - name: http
+              containerPort: 1080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            requests:
+              memory: 24M
+            limits:
+              memory: 64M
+      initContainers:
+        - name: talks-indexer
+          image: vibioh/talks
+          envFrom:
+            - secretRef:
+                name: talks-indexer
+          command:
+            - /revealgolia
+            - -source
+            - /www/doc/
+            - -prefixFromFolder
