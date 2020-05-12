@@ -3,6 +3,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: talks
+  labels:
+    app.kubernetes.io/name: talks
+    app.kubernetes.io/instance: talks
+    app.kubernetes.io/managed-by: kubectl
 spec:
   selector:
     matchLabels:
