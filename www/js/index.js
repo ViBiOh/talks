@@ -45,8 +45,8 @@ function removeAllChild(element) {
  */
 async function insertRevealScripts() {
   await addScript('/vendor/reveal.js?v={{version}}');
-  await addScript('/vendor/marked.js?v={{version}}');
   await addScript('/vendor/markdown.js?v={{version}}');
+  await addScript('/vendor/highlight.js?v={{version}}');
 }
 
 /**
@@ -109,9 +109,10 @@ async function loadMarkdown(markdownFilename, pageNum, slideNum) {
 
   slides.appendChild(section);
 
-  await RevealMarkdown.init();
-  Reveal.navigateTo(pageNum, slideNum);
+  await Reveal.getPlugin('markdown').init(Reveal);
+  Reveal.slide(pageNum, slideNum);
 
+  const hljs = Reveal.getPlugin('highlight');
   document.querySelectorAll('pre code').forEach((block) => {
     hljs.highlightBlock(block);
   });
@@ -122,7 +123,7 @@ async function loadMarkdown(markdownFilename, pageNum, slideNum) {
  * @return {marked.Renderer} Configured renderer
  */
 function getMarkedRenderer() {
-  const renderer = new marked.Renderer();
+  const renderer = new (RevealMarkdown().marked).Renderer();
 
   renderer.image = (href, title, text) =>
     `<img data-src="/doc/${currentName}/${href}?v={{version}}" alt="${title}" />`;
@@ -156,14 +157,6 @@ function getMarkedRenderer() {
     markdown: {
       renderer: getMarkedRenderer(),
     },
-    dependencies: [
-      {
-        src: '/vendor/classList.js',
-        condition: () => !document.body.classList,
-      },
-      {
-        src: '/vendor/highlight.js',
-      },
-    ],
+    plugins: [RevealMarkdown, RevealHighlight],
   });
 })();
