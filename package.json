@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/ViBiOh/talks#readme",
   "dependencies": {
-    "reveal.js": "3.9.2"
+    "reveal.js": "4.0.0"
   },
   "devDependencies": {
     "clean-css-cli": "4.3.0",
