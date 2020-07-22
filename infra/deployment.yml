@@ -55,3 +55,10 @@ spec:
             - -source
             - /www/doc/
             - -prefixFromFolder
+          resources:
+            requests:
+              memory: 64M
+              cpu: 200m
+            limits:
+              memory: 64M
+              cpu: 200m
