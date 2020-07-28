@@ -3,7 +3,7 @@
  * @return {Promise} Promise resolved when script is loaded
  */
 async function addScript(src) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = src;
@@ -19,7 +19,7 @@ async function addScript(src) {
  * @return {Promise} Promise resolved when style is loaded
  */
 async function addStyle(src) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const style = document.createElement('link');
     style.rel = 'stylesheet';
     style.href = src;
@@ -64,10 +64,13 @@ function getConfig() {
     override.markdown = markdown;
   });
 
-  window.location.hash.replace(/\/([0-9]+)(?:\/([0-9]+))?$/gim, (match, pageNum, slideNum) => {
-    override.pageNum = pageNum;
-    override.slideNum = slideNum;
-  });
+  window.location.hash.replace(
+    /\/([0-9]+)(?:\/([0-9]+))?$/gim,
+    (match, pageNum, slideNum) => {
+      override.pageNum = pageNum;
+      override.slideNum = slideNum;
+    },
+  );
 
   return override;
 }
@@ -123,7 +126,7 @@ async function loadMarkdown(markdownFilename, pageNum, slideNum) {
  * @return {marked.Renderer} Configured renderer
  */
 function getMarkedRenderer() {
-  const renderer = new (RevealMarkdown().marked).Renderer();
+  const renderer = new (RevealMarkdown().marked.Renderer)();
 
   renderer.image = (href, title, text) =>
     `<img data-src="/doc/${currentName}/${href}?v={{version}}" alt="${title}" />`;
