@@ -16,13 +16,16 @@ spec:
       labels:
         name: talks
       annotations:
-        prometheus.io/scrape: "true"
+        prometheus.io/scrape: 'true'
         prometheus.io/scheme: http
-        prometheus.io/port: "1080"
+        prometheus.io/port: '1080'
     spec:
       containers:
         - name: talks
           image: vibioh/talks
+          env:
+            - name: VIWS_LOGGER_JSON
+              value: 'true'
           envFrom:
             - secretRef:
                 name: talks
