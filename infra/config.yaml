@@ -1,0 +1,27 @@
+---
+nameOverride: talks
+
+image:
+  repository: vibioh/talks
+
+init:
+  enabled: true
+  repository: vibioh/talks
+  env:
+    REVEALGOLIA_LOGGER_JSON: true
+  secretRef: talks-indexer
+  command:
+    - /revealgolia
+    - -source
+    - /www/doc/
+    - -prefixFromFolder
+
+config:
+  VIWS_LOGGER_JSON: 'true'
+
+secretRef: talks
+
+ingress:
+  enabled: true
+  hosts:
+    - talks.vibioh.fr
