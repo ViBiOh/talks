@@ -5,6 +5,8 @@ ifneq ("$(wildcard .env)","")
 	export
 endif
 
+APP_NAME = talks
+
 ## help: Display list of commands
 .PHONY: help
 help: Makefile
