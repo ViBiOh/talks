@@ -137,7 +137,7 @@ function getMarkedRenderer() {
       url = `/doc/${currentName}/${href}`;
     }
 
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+    return `<a href="${url}">${text}</a>`;
   };
 
   return renderer;
