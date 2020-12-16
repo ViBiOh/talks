@@ -50,7 +50,7 @@ Scripter mon environnement de développement.
 ### Productivité
 
 * Completions (e.g. `bash`, `git`, `pass`, `pgcli`, etc.)
-* Alias des commandes usuelles pour le `golang`, `js`, `docker`, etc.
+* Alias des commandes usuelles pour le `golang`, `js`, `kube`, etc.
 
 
 ## Où ?
@@ -73,7 +73,7 @@ Un _snippet_ de démarrage et un script d'installation sont les bienvenus, idéa
 mkdir -p "${HOME}/code"
 cd "${HOME}/code"
 git clone git@github.com:ViBiOh/dotfiles.git
-./dotfiles/init
+./dotfiles/init -a
 ```
 
 
