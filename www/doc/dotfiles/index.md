@@ -77,6 +77,9 @@ git clone git@github.com:ViBiOh/dotfiles.git
 ```
 
 
+⚠️ Sur macOS, la version de base de `bash` est ancienne, il faut donc veiller à rester compatible.
+
+
 Pour mettre à jour l'environnement ou les outils, relancer le script d'installation.
 
 
