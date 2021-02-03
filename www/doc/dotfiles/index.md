@@ -57,7 +57,7 @@ Scripter mon environnement de développement.
 
 Un repo Git sur lequel stocker tous les fichiers.
 
-Les branches permettent de gérer des configurations distinctes (e.g. `master` vs `work`).
+Les branches permettent de gérer des configurations distinctes (e.g. `main` vs `work`).
 
 
 ## Comment ?
