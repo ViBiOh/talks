@@ -17,10 +17,10 @@ spec:
   values:
     nameOverride: talks
     image:
-      repository: vibioh/talks:202102151056 # {"$imagepolicy": "default:talks"}
+      repository: vibioh/talks:202102152201 # {"$imagepolicy": "default:talks"}
     init:
       enabled: true
-      repository: vibioh/talks:202102151056 # {"$imagepolicy": "default:talks"}
+      repository: vibioh/talks:202102152201 # {"$imagepolicy": "default:talks"}
       env:
         REVEALGOLIA_LOGGER_JSON: true
       secrets:
