@@ -24,10 +24,10 @@ spec:
   values:
     nameOverride: talks
     image:
-      repository: vibioh/talks:202102271711 # {"$imagepolicy": "default:flux-talks-web"}
+      repository: vibioh/talks:202103011630 # {"$imagepolicy": "default:flux-talks-web"}
     init:
       enabled: true
-      repository: vibioh/talks:202102271711 # {"$imagepolicy": "default:flux-talks-web"}
+      repository: vibioh/talks:202103011630 # {"$imagepolicy": "default:flux-talks-web"}
       env:
         REVEALGOLIA_LOGGER_JSON: true
       secrets:
