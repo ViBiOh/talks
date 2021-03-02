@@ -16,6 +16,7 @@ spec:
       interval: 120m
   install:
     skipCRDs: true
+  maxHistory: 3
   upgrade:
     remediation:
       retries: 3
@@ -35,10 +36,10 @@ spec:
         REVEALGOLIA_INDEX: AgCYhtet2FyYKVM9XpCiKAuQMtX48vGdPgQJVvryGqtCf3f2r7PaJP+rajyHYW0e56V8iPCc5zQAp+WTbBZsKpr8I2XDLkk99xS6+boiW5VWPREKTfx/j8QYPLsx6LpjmJT/BmkQFlwA8/iwvoxwow5DHkobGGAckivFafPoCRZAzy5x23dwZzaHQjb9ovon2J1qN1Uo+DTdp/qHH1kHR7dWLAVwQAJCkTDVjor9R512mjLYszzlUhxE9eqtR3RtJWXYPZ9X87fzxtLf8K1XYZvWZaz10XbICaqxQH9Q7zplfHn5GTQgh4JvT4LXrTQoCBZ2FfCwjXJ7TxfaCuO+dofJMxpMyaMnIQSeYaIhm0OE/i+EaFkDu91E1qUCxsyob6ZBLwMKPzQq/6KiO46EthJCAj5UGZ4xSUGQ5FFqCDbIp6DW65oi/bw11QWtL5QlBzu/1Wjye/haRYxLguSs2aKTZrUodTaN3kwx6mRqkEFRX3qgQgeZb7U7XIqeRzbJGNyPZ2t86um1DQJ1p+02QYWxq0HljGQBEIe2ukQDLBIo/a52U1SoFsMfAXypkCGotwpg8tLl1uYa0MPPxsJTjmnnWsIYBWVnEKTKEXPpBzDmBQz6oZLfe6MIUGAnL9ZOlQTIRjSdtjK1TIcPhgcR8my8UjFs1VAorATvFJnzOTRtSoc1ApeLU+Nqq/EP+3B7wggowwKXMw==
         REVEALGOLIA_KEY: AgAkJ0q8cN7LrMSBcFh5G0sp6rWOf5KsYAVasHRPkM8swReRwYqjgQqGxtsdiqEOlAGMa0iDL3sdYAGGx2ZKNby69sJMIFsvaHO+wGsESMPenYscs1RvFiy7cfWHoV1aNUIln8d3YQMYdC9kKB1GUoI3SvvEeAlrO2h0HxdMVAJSmvKol2jZ4yo0EDtXMZxppXo41IRG4kRVtPz7DqlJBhorhb37RIVaHc+BYBibV1L0/HPBamXMJ6Xr8O5EdLswS8yFnvSF1wmL5ihQgJGwk4ooWLg7+xaguI2XEcuDutGTaWGLgsCqMUBZeXe/Q7TVVLDjZCWpJ0enAOK4yKuujAuaUXYulnSWS5j4jqmwcXfITw+w8YT3wfI+A1a/0drBxH+a8xxLzQT1BuW5HhHW9QMkNPIoIWoUGfrmadFAUqOBhbmuzzniB31051v8Sv1fOv82GbIl4ygHT1In92BotHlhF6dt0dyLUqiVqAS1vMAZUDzCLgXx3o9znNKzS8JRc8yIt/NVDRsYTHcNEcFzhGJ4cluuULHFFcaIVPQwej3iEJL8Cc8xn+reSq14qa9/9CIFi/GrR4XgMspQDsF3k29Zw5wQVTggPHWSCl8ndHQeASncNPW4Yset0TMRq+tMZN5Ewp1Z6KHx4dM8Kt5iNpM5EJgRaNVLq++pGb4YMIjIVWhx4edP+8mq/5frhxMOux4kG7/do+JfV2BpGwUgswdbV+cQ5uv86rCUwgHfH/TpOQ==
       command:
-      - /revealgolia
-      - -source
-      - /www/doc/
-      - -prefixFromFolder
+        - /revealgolia
+        - -source
+        - /www/doc/
+        - -prefixFromFolder
     config:
       VIWS_LOGGER_JSON: 'true'
     secrets:
@@ -48,4 +49,4 @@ spec:
     ingress:
       enabled: true
       hosts:
-      - talks.vibioh.fr
+        - talks.vibioh.fr
