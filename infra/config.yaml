@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app
-      version: '0.0.47'
+      version: '0.0.48'
       sourceRef:
         kind: HelmRepository
         name: vibioh
@@ -25,10 +25,12 @@ spec:
   values:
     nameOverride: talks
     image:
-      repository: vibioh/talks:202103020805 # {"$imagepolicy": "default:flux-talks-web"}
+      name: vibioh/talks
+      tag: 202103020805 # {"$imagepolicy": "default:flux-talks-web:tag"}
     init:
       enabled: true
-      repository: vibioh/talks:202103020805 # {"$imagepolicy": "default:flux-talks-web"}
+      name: vibioh/talks
+      tag: 202103020805 # {"$imagepolicy": "default:flux-talks-web:tag"}
       env:
         REVEALGOLIA_LOGGER_JSON: true
       secrets:
