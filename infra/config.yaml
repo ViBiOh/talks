@@ -26,11 +26,11 @@ spec:
     nameOverride: talks
     image:
       name: vibioh/talks
-      tag: "202103070830" # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: "202103092214" # {"$imagepolicy": "default:flux-talks-web:tag"}
     init:
       enabled: true
       name: vibioh/talks
-      tag: "202103070830" # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: "202103092214" # {"$imagepolicy": "default:flux-talks-web:tag"}
       env:
         REVEALGOLIA_LOGGER_JSON: true
       secrets:
