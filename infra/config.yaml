@@ -51,3 +51,6 @@ spec:
       enabled: true
       hosts:
       - talks.vibioh.fr
+    canary:
+      enabled: true
+      url: https://talk.vibioh.fr
