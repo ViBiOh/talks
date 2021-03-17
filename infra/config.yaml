@@ -53,4 +53,4 @@ spec:
       - talks.vibioh.fr
     canary:
       enabled: true
-      url: https://talk.vibioh.fr
+      url: https://talks.vibioh.fr
