@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -26,12 +25,12 @@ spec:
     nameOverride: talks
     image:
       name: vibioh/talks
-      tag: '202104121152' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202104142058' # {"$imagepolicy": "default:flux-talks-web:tag"}
     command:
-      - /revealgolia
-      - -source
-      - /www/doc/
-      - -prefixFromFolder
+    - /revealgolia
+    - -source
+    - /www/doc/
+    - -prefixFromFolder
     config:
       REVEALGOLIA_LOGGER_JSON: true
     secrets:
