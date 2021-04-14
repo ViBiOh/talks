@@ -22,6 +22,7 @@ spec:
   rollback:
     cleanupOnFail: true
   values:
+    nameOverride: talks-algolia
     image:
       name: vibioh/talks
       tag: '202104142112' # {"$imagepolicy": "default:flux-talks-web:tag"}
