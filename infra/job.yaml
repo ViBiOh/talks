@@ -24,7 +24,7 @@ spec:
   values:
     image:
       name: vibioh/talks
-      tag: '202104142103' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202104142112' # {"$imagepolicy": "default:flux-talks-web:tag"}
     command:
     - /revealgolia
     - -source
