@@ -39,3 +39,5 @@ spec:
     canary:
       enabled: true
       url: https://talks.vibioh.fr
+    podDisruption:
+      enabled: false
