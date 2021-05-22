@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app
-      version: '0.0.69'
+      version: '0.0.70'
       sourceRef:
         kind: HelmRepository
         name: vibioh
@@ -39,5 +39,3 @@ spec:
     canary:
       enabled: true
       url: https://talks.vibioh.fr
-    podDisruption:
-      enabled: false
