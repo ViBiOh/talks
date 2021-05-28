@@ -9,7 +9,7 @@
     "reveal": "mkdir -p www/vendor && npm run reveal:css && npm run reveal:js",
     "build": "script/ci",
     "prestart": "go get github.com/ViBiOh/viws/cmd/viws-light",
-    "start": "viws-light -directory ${INIT_CWD}/www -spa -csp \"default-src 'self'; style-src 'self' 'unsafe-inline'\""
+    "start": "viws-light -directory ${INIT_CWD}/www -spa -csp \"default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'\""
   },
   "repository": {
     "type": "git",
