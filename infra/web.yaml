@@ -25,7 +25,7 @@ spec:
     nameOverride: talks
     image:
       name: vibioh/talks
-      tag: '202105230725' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202105281517' # {"$imagepolicy": "default:flux-talks-web:tag"}
     config:
       VIWS_LOGGER_JSON: 'true'
     secrets:
