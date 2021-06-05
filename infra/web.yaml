@@ -25,7 +25,7 @@ spec:
     nameOverride: talks
     image:
       name: vibioh/talks
-      tag: '202105290810' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202106051336' # {"$imagepolicy": "default:flux-talks-web:tag"}
     config:
       VIWS_LOGGER_JSON: 'true'
       VIWS_PROMETHEUS_GZIP: 'false'
@@ -36,7 +36,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-        - talks.vibioh.fr
+      - talks.vibioh.fr
     canary:
       enabled: true
       url: https://talks.vibioh.fr
