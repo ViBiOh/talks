@@ -28,6 +28,7 @@ spec:
       tag: '202105290810' # {"$imagepolicy": "default:flux-talks-web:tag"}
     config:
       VIWS_LOGGER_JSON: 'true'
+      VIWS_PROMETHEUS_GZIP: 'false'
     secrets:
       ALGOLIA_APP: AgB/j1+eKBhx1WquGu4KJ0z49BmBbu+dXIqiUIRi7vmWxEFcb21wFe1V3+Skh/lvuyaloaEQi13HHyTTt+4uZ8RsMyJlW1Pt1fbPZrT530o94Kcmwpjq5KibGZUKdWIq7MHDMUH1gNrCAlTz1P5Vl+BuzUmpwHPjrhjeIWXJo7Ibd7JC+fgSsf82d18niR0nGmGdOr3U0/JQS+p0kJJuzNBc9W7yOrAaqwhsTLmKuCcpQ5BsN13/ta2VmXJ345aUli5WXGtIUmwW6cEVy/J7sIwuicL8cXCwe383jqz6LBislnqnIGvYCxkklRZMqp0AyVvxZjRyhVtjEySzBfLBunTx52EP2FYLJgjmD5Lw0MUa8cplIAXsEPkiZj6CF14Ek+Cuir5qbo/FQ7UkAJtpESvE/Q64op5PkaMeqeGG09Fui/q3gxrZODwDc6c6jTr8ZgxsI6c2h4J29rHwtDjv7ARbFtYijcP0d4DJsX2RuYVa1fcsEvNAILeVwAof8thkN7kTZ5iG3NkQkqiDagafgDzl9IC18LzMZQHA2Ue734icYohPP6A1iRmdMmyxNn5fq3Dlk+00gu7kEDaxNYTl4NQHsvER8ILNe9WMDyBRkpBCABKTKXe1JOMoW3kagrxbHGd1ppfnubVqExR0DuDE0E1s89Tp2pQo3p+CF8S3x5KqnRjbKDfD/rHASwd0WyECGqXDEmA4bHxf2LpV
       ALGOLIA_INDEX: AgC2sphEhk7GpZrrZMO5NdTWyOHfVNsbCDaRkI9RyRu5sY8elzFs2QVUDYreSE8w4pUR2sSHRQ7NLE0mb2ZU680vcO8yRwYSogkG1qWZprdVcGG6iNVzNOSnxc5o3ntOGzE421lFY2ZdykngkRyALoQtiFPhTUBJ7FljSuK5IT5JILqEXadat5fokYOqh2qV92LbCZo5sYwfg+EzQaX/QRQ7Hf9wrVjqUIsaWiJ3HipgHDpcUDx73z6vMzofZT57OODN3nRb4cfh0Y0VttKWEOFashN8HyDVgnYGfJo8bkbvkSX5a3lA+6I1MS+xWqaZEe7r/6zezpfTCkjZyzqqdWYcg1VfRtsZNl/VmUcXU+wdYqpYGRgyluZsHjSVmT8BzS7VN2diVfvy0lhlFquSAMbFdYZrIfU1ukTLuMQWU5PqXNRA1RSEnUjIxKgGLAc9cA1XPi+nc/M+c65Q4QVvIDMflON8ebGKVqlrI7+pSbvyjd2iqAwFBnvj7rhh4Dc1m//pkIvbBnx8GfnH/n/W/wbb8hkoOLF8e045GC6aAMtiT2DuPdSL5G9EbEsaaXutWlM5qPijZIU1CJeswEMPo6s96YAv1BolEqq8s5iOjhKHZZrmGxV3Wbj8ZG7xAv8EvOHKhKyDOipn/sJa3D30Ta3G3I/SyfYOXnYVi1U3GJB7IPo41eAN+lJwsm0XivOcuEJrOC4nvg==
@@ -35,7 +36,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-      - talks.vibioh.fr
+        - talks.vibioh.fr
     canary:
       enabled: true
       url: https://talks.vibioh.fr
