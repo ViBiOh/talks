@@ -1,7 +1,6 @@
 # Kubernetes - k8s
 
 
-
 ## Orchestrateur
 
 Il déploie des conteneurs sur une ou plusieurs machines physiques qui partagent un même réseau.
@@ -192,6 +191,25 @@ Si je détruis le *pod* d'un *deployment*, Kubernetes le voit, et en repop un au
 Ce *pod* sera peut-être sur le même noeud ou un autre. Il faut donc s'assurer que l'application respecte les 12factor App.
 
 On ne peut pas dépendre d'un volume local, sauf à définir des affinités entre les pods et les noeuds.
+
+
+
+## Tools
+
+
+`kubectl`
+
+La [CLI standard](https://kubernetes.io/docs/tasks/tools/)
+
+
+`k9s`
+
+La [CLI améliorée](https://k9scli.io)
+
+
+`Lens`
+
+L'app [Kube Desktop](https://k8slens.dev)
 
 
 
