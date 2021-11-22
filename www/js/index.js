@@ -65,7 +65,7 @@ function getConfig() {
   });
 
   window.location.hash.replace(
-    /\/([0-9]+)(?:\/([0-9]+))?$/gim,
+    /\/(\d+)(?:\/(\d+))?$/gim,
     (match, pageNum, slideNum) => {
       override.pageNum = pageNum;
       override.slideNum = slideNum;
