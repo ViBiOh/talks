@@ -25,7 +25,7 @@ spec:
     nameOverride: talks-algolia
     image:
       name: vibioh/talks
-      tag: '202112120908' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202112120922' # {"$imagepolicy": "default:flux-talks-web:tag"}
     command:
       - /revealgolia
       - -source
