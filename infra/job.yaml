@@ -25,12 +25,12 @@ spec:
     nameOverride: talks-algolia
     image:
       name: vibioh/talks
-      tag: '202201300755' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202202191657' # {"$imagepolicy": "default:flux-talks-web:tag"}
     command:
-      - /revealgolia
-      - -source
-      - /www/doc/
-      - -prefixFromFolder
+    - /revealgolia
+    - -source
+    - /www/doc/
+    - -prefixFromFolder
     config:
       REVEALGOLIA_LOGGER_JSON: true
     secrets:
