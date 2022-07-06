@@ -38,8 +38,5 @@ spec:
       enabled: true
       hosts:
         - talks.vibioh.fr
-    canary:
-      enabled: true
-      url: https://talks.vibioh.fr
     pprof:
       enabled: true
