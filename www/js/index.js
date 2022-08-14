@@ -60,13 +60,13 @@ function getConfig() {
     slideNum: 0,
   };
 
-  window.location.pathname.replace(/([^/]+)/gim, (match, markdown) => {
+  window.location.pathname.replace(/([^/]+)/gim, (_, markdown) => {
     override.markdown = markdown;
   });
 
   window.location.hash.replace(
     /\/(\d+)(?:\/(\d+))?$/gim,
-    (match, pageNum, slideNum) => {
+    (_, pageNum, slideNum) => {
       override.pageNum = pageNum;
       override.slideNum = slideNum;
     },
@@ -128,10 +128,10 @@ async function loadMarkdown(markdownFilename, pageNum, slideNum) {
 function getMarkedRenderer() {
   const renderer = new (RevealMarkdown().marked.Renderer)();
 
-  renderer.image = (href, title, text) =>
+  renderer.image = (href, title) =>
     `<img data-src="/doc/${currentName}/${href}?v={{version}}" alt="${title}" />`;
 
-  renderer.link = (href, title, text) => {
+  renderer.link = (href, _, text) => {
     let url = href;
     if (!/^https?:\/\//.test(href)) {
       url = `/doc/${currentName}/${href}`;
