@@ -27,7 +27,7 @@ spec:
       k8s-cleaner: 'true'
     image:
       name: vibioh/talks
-      tag: '202208141356' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202208240923' # {"$imagepolicy": "default:flux-talks-web:tag"}
     command:
       - /revealgolia
       - -source
