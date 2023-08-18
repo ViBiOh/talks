@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -28,9 +29,10 @@ spec:
       tag: '202307231117' # {"$imagepolicy": "default:flux-talks-web:tag"}
     config:
       GOMAXPROCS: '1'
+      OTEL_SERVICE_NAME: talks
       VIWS_GZIP: 'false'
       VIWS_LOGGER_JSON: 'true'
-      VIWS_PROMETHEUS_GZIP: 'false'
+      VIWS_TELEMETRY_URL: otel-collector.observability:4317
     secrets:
       ALGOLIA_APP: AgCTTvzQfdmzmNhqGnsoyJZkFCRSCj9iEmnl8KJsTxUQ3Dv1FUmm9TxVhO81yBEWlKOzkeoOv5kNr8ir26hH91c7tNrxNq3seNhRHZZRe9+jcSVytfS6JOtxBgNMZjaBCGSbuqiedSG1HzhgeSvQgtCDFVuc3+AcUK4CS3r5GHhZJPahHydEW28bfBr4uIHPuM8hLJkafbhJAkfR3YztfZy0uRRMZIOFCqj0yP90h8hsQqS94zhmrUaGBIGTehftiihZ9eXMfrfDnII7ybZEaq82VaR/YijVDahK+yckpK1UK9vvCkXxIeQz5nI5t9CnfaY8xxb7DjxueLpMBNIwhtZq2QN5PRUops8kgMfkCCkxmACTH9z64Tfuz0FFvfvN77yrJWp1H2M5IgZ8Y/X7jwITKeufgv1xfcpcEoT8XQqhsdrK+cIT8oTdSRY5xfPJVa0ON75hbDtjuqlZKIQ4mFmYkA641WMK6DvSNVP1ot3nYfUnX2/bfSLc7OJOnVMgXqgpq46zpiRivnTgg9cIBBzarKIJ+l1DzSGyARf4P9JRr+FDS62I1Bg0PbJi+j3oAax9y26o2XQEOcuVXAFz7rR/xuSzM/H+gsPCqCyCgI2vdIr266cEzjPtMzJ+563oXkqyrCdoE3eXtb8SsiRVHaoIJfm+6PxyfOaaaw8bHrGVVvuiKFWGyuweao5UchA51SB301Y+Os0BRymC
       ALGOLIA_INDEX: AgBVbMVpsfrjAQCSLrnxKxLSBkjKfvcETWvcc4RCEk1+7uZj48dL1j820syK1WyO3apiLZfB6VVjSjqfa3vmsslMtm+H4nf4cqlj/lCd0nHltoUeplz5unBNf/SA7J1w1N1R0pOZ5BBxaMXXHw5l/j5qkIjOkyluqOuQe8klLynMxgMBn9ZYYtJQ7C9Gb2xxM1sskeqfhGpzhJEckLpXIvXHojwjRiDlrqFzmMREe5ls25ITLSUAOCsvJ+6KVM4CwPr6muzJx4ky/N43rm8qCAhkkA8Gp6xoCBm9nviZInX4js0N7weZeTAy9VSEjWV+jB2k5oss0Vk0B6/huvYgA4i0WhMwFASwRqQoGH9s1D+CF/8+D14a714pzvKQ3B51hV5mpk4rueualOP2mjPq58KZu3PKv0jmAw3HYp7smvvFszogmC5pFGQn8uCw2mb9rDwy+JRy9YD1I7TtBWKTpgFCE3FoDlzCsHvudErSACEtKkCSIcbfQyb01IObxiK1LtDjVWdOR2vSZHA4OhUdi08lWCukSehGqutWRiPtJjDV/wb2DelBPK4axijC0TtngHqH8grD/8m8lcGA0ltKbowkeYdVep42qR1e7GWAzK5P47ngDwNDw+uK/JlHZfkS7/FIV4P7tI15G9ccuYqprKSuzv0Rbi3R4bHcqXpFajPYuIRJ4LGe+Vh9q8eV9ChfuFMRHLRyKw==
