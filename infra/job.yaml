@@ -1,4 +1,3 @@
----
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
@@ -22,26 +21,21 @@ spec:
   template:
     spec:
       automountServiceAccountToken: false
-
       imagePullSecrets:
         - name: dockerhub
-
       restartPolicy: OnFailure
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-
       containers:
         - name: algolia
-          image: vibioh/talks:202307231117 # {"$imagepolicy": "default:flux-talks-web"}
+          image: vibioh/talks:202308182251 # {"$imagepolicy": "default:flux-talks-web"}
           imagePullPolicy: Always
-
           command:
             - /revealgolia
             - -source
             - /www/doc/
             - -prefixFromFolder
-
           envFrom:
             - secretRef:
                 name: talks-algolia
@@ -58,14 +52,12 @@ spec:
                 secretKeyRef:
                   name: talks
                   key: ALGOLIA_INDEX
-
           resources:
             limits:
               memory: 64Mi
             requests:
               cpu: 100m
               memory: 64Mi
-
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
