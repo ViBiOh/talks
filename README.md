@@ -6,3 +6,11 @@
 ## Thanks
 
 [Twitter Emoji](https://github.com/twitter/twemoji) for favicon.
+
+## Getting started
+
+```bash
+npm install
+npm reveal
+npm start
+```
