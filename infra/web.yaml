@@ -28,6 +28,7 @@ spec:
       tag: '202311301358' # {"$imagepolicy": "default:flux-talks-web:tag"}
     config:
       GOMAXPROCS: '1'
+      OTEL_RESOURCE_ATTRIBUTES: env=production
       OTEL_SERVICE_NAME: talks
       VIWS_GZIP: 'false'
       VIWS_LOGGER_JSON: 'true'
