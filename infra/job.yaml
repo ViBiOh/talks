@@ -29,7 +29,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: algolia
-          image: vibioh/talks:202312152320 # {"$imagepolicy": "default:flux-talks-web"}
+          image: vibioh/talks:202312152353 # {"$imagepolicy": "default:flux-talks-web"}
           imagePullPolicy: Always
           command:
             - /revealgolia
