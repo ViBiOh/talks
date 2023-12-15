@@ -12,4 +12,7 @@ COPY revealgolia_${TARGETOS}_${TARGETARCH} /revealgolia
 ARG VERSION
 ENV VERSION=${VERSION}
 
+ARG GIT_SHA
+ENV GIT_SHA=${GIT_SHA}
+
 COPY www/ /www/
