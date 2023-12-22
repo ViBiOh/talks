@@ -25,7 +25,7 @@ spec:
     nameOverride: talks
     image:
       name: vibioh/talks
-      tag: '202312181406' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202312221414' # {"$imagepolicy": "default:flux-talks-web:tag"}
     config:
       GOMAXPROCS: '1'
       OTEL_RESOURCE_ATTRIBUTES: env=production,git.repository_url=github.com/ViBiOh/talks
