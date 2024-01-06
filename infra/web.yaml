@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app
-      version: '0.0.92'
+      version: '0.0.94'
       sourceRef:
         kind: HelmRepository
         name: vibioh
@@ -38,7 +38,7 @@ spec:
       ALGOLIA_INDEX: AgBVbMVpsfrjAQCSLrnxKxLSBkjKfvcETWvcc4RCEk1+7uZj48dL1j820syK1WyO3apiLZfB6VVjSjqfa3vmsslMtm+H4nf4cqlj/lCd0nHltoUeplz5unBNf/SA7J1w1N1R0pOZ5BBxaMXXHw5l/j5qkIjOkyluqOuQe8klLynMxgMBn9ZYYtJQ7C9Gb2xxM1sskeqfhGpzhJEckLpXIvXHojwjRiDlrqFzmMREe5ls25ITLSUAOCsvJ+6KVM4CwPr6muzJx4ky/N43rm8qCAhkkA8Gp6xoCBm9nviZInX4js0N7weZeTAy9VSEjWV+jB2k5oss0Vk0B6/huvYgA4i0WhMwFASwRqQoGH9s1D+CF/8+D14a714pzvKQ3B51hV5mpk4rueualOP2mjPq58KZu3PKv0jmAw3HYp7smvvFszogmC5pFGQn8uCw2mb9rDwy+JRy9YD1I7TtBWKTpgFCE3FoDlzCsHvudErSACEtKkCSIcbfQyb01IObxiK1LtDjVWdOR2vSZHA4OhUdi08lWCukSehGqutWRiPtJjDV/wb2DelBPK4axijC0TtngHqH8grD/8m8lcGA0ltKbowkeYdVep42qR1e7GWAzK5P47ngDwNDw+uK/JlHZfkS7/FIV4P7tI15G9ccuYqprKSuzv0Rbi3R4bHcqXpFajPYuIRJ4LGe+Vh9q8eV9ChfuFMRHLRyKw==
       ALGOLIA_KEY: AgBV0nJcWmpw105VCY6VppwrHBmvswytX76CwJLO6kygdIAC6knKNvUQF7kkugx1MWgSmcHJRKdkqUUZTJNIyef3uuikKQRHpZDJOv6LuHB+a+027WjYqlhvZEDd9yd+s+vaX/JmtDGGyIC0yb/RZF6ldY3SHamGbRWiJbpELYCstN0JOmdufRWujNVhSpC0/CL51/wPcFyEYfxe4Vhk2InWGC5qGsDJfL/eUTQMc6x3DxYM4IHahvL/ntP7N5dedNFdr1oo6KLGupBTpzAYY8RYFlG34CSFzglQNRujJVHNiXM0l2zP9CQD0Q6bAMKUY2RwAd9DamjLvxtx12Za4rNCzUHOMUroNyH0FN5+mTQEQJ+GKguxXpmen6IRIcpTyLPR3EM4gXBC7XImNclxGbqJZTMAXRChZgkX9FTBOU4wH7mbV55kz/Ry7IMydVB52IdRSRByct38Wh4zRvwl5biTiYHGx5mlUpcRhVuqgOeQZdgfmBgDkG4eXmVMIbuwIEDnGDRT6mEV4EGaYCzY9ekfzci7DDLk9XASqgFsd1GeIlFzsnQwfio8oQbebyxd1Yljee/uvo3dq5RP7l6nDUNVSWrlj2MJsfTGDLgyWtcKPOURcAcosmHS1pTRH0SDsUSIWhsJtRnRn9oaNiKrRgoO05xP5OuRQopT4gGzFRznAbhgOsEEV5QEkxWl9K8oXGOsQenwqtTCJpLZomHFTz+RgzFvGyNKb6Jgr6pfplKQqg==
     ingress:
-      enabled: false
+      enabled: true
       compress: true
       hosts:
         - talks.vibioh.fr
