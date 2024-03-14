@@ -25,11 +25,11 @@ spec:
     nameOverride: talks
     image:
       name: vibioh/talks
-      tag: '202402261410' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202403142241' # {"$imagepolicy": "default:flux-talks-web:tag"}
     labels:
       tags.datadoghq.com/env: 'production'
       tags.datadoghq.com/service: 'talks'
-      tags.datadoghq.com/version: '202402261410' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tags.datadoghq.com/version: '202403142241' # {"$imagepolicy": "default:flux-talks-web:tag"}
     env:
       - name: GOMAXPROCS
         valueFrom:
