@@ -51,6 +51,7 @@ spec:
       OTEL_RESOURCE_ATTRIBUTES: env=production,git.repository_url=github.com/ViBiOh/talks
       VIWS_GZIP: 'false'
       VIWS_LOGGER_JSON: 'true'
+      VIWS_PPROF_AGENT: http://datadog.observability:8126
       VIWS_TELEMETRY_URL: datadog.observability:4317
     secrets:
       ALGOLIA_APP: AgCTTvzQfdmzmNhqGnsoyJZkFCRSCj9iEmnl8KJsTxUQ3Dv1FUmm9TxVhO81yBEWlKOzkeoOv5kNr8ir26hH91c7tNrxNq3seNhRHZZRe9+jcSVytfS6JOtxBgNMZjaBCGSbuqiedSG1HzhgeSvQgtCDFVuc3+AcUK4CS3r5GHhZJPahHydEW28bfBr4uIHPuM8hLJkafbhJAkfR3YztfZy0uRRMZIOFCqj0yP90h8hsQqS94zhmrUaGBIGTehftiihZ9eXMfrfDnII7ybZEaq82VaR/YijVDahK+yckpK1UK9vvCkXxIeQz5nI5t9CnfaY8xxb7DjxueLpMBNIwhtZq2QN5PRUops8kgMfkCCkxmACTH9z64Tfuz0FFvfvN77yrJWp1H2M5IgZ8Y/X7jwITKeufgv1xfcpcEoT8XQqhsdrK+cIT8oTdSRY5xfPJVa0ON75hbDtjuqlZKIQ4mFmYkA641WMK6DvSNVP1ot3nYfUnX2/bfSLc7OJOnVMgXqgpq46zpiRivnTgg9cIBBzarKIJ+l1DzSGyARf4P9JRr+FDS62I1Bg0PbJi+j3oAax9y26o2XQEOcuVXAFz7rR/xuSzM/H+gsPCqCyCgI2vdIr266cEzjPtMzJ+563oXkqyrCdoE3eXtb8SsiRVHaoIJfm+6PxyfOaaaw8bHrGVVvuiKFWGyuweao5UchA51SB301Y+Os0BRymC
