@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app
-      version: "0.1.2"
+      version: '0.1.2'
       sourceRef:
         kind: HelmRepository
         name: vibioh
@@ -25,11 +25,11 @@ spec:
     nameOverride: talks
     image:
       name: vibioh/talks
-      tag: "202405041655" # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202405041655' # {"$imagepolicy": "default:flux-talks-web:tag"}
     labels:
-      tags.datadoghq.com/env: "production"
-      tags.datadoghq.com/service: "talks"
-      tags.datadoghq.com/version: "202405041655" # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tags.datadoghq.com/env: 'production'
+      tags.datadoghq.com/service: 'talks'
+      tags.datadoghq.com/version: '202405041655' # {"$imagepolicy": "default:flux-talks-web:tag"}
     env:
       - name: GOMAXPROCS
         valueFrom:
@@ -49,8 +49,8 @@ spec:
             fieldPath: metadata.labels['tags.datadoghq.com/service']
     config:
       OTEL_RESOURCE_ATTRIBUTES: env=production,git.repository_url=github.com/ViBiOh/talks
-      VIWS_GZIP: "false"
-      VIWS_LOGGER_JSON: "true"
+      VIWS_GZIP: 'false'
+      VIWS_LOGGER_JSON: 'true'
       VIWS_PPROF_AGENT: http://datadog.observability:8126
       VIWS_TELEMETRY_URL: datadog.observability:4317
     secrets:
