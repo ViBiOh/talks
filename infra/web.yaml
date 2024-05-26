@@ -1,3 +1,14 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: talks-algolia
+  namespace: default
+spec:
+  encryptedData:
+    REVEALGOLIA_KEY: AgB9AhbEI0C9BI6d1067xtb7hzeJcqocYqwxYqDvt6f3SAwx6JS3r0my3b5ubL8sJMhb39tz06tX5Km+kZ0eWPPpaIAttp6JygEsCZ+5af2TI7PrsOM9mCOOZe1SKnmaqz1nptEl+thTU174sdeOyRzoy5DV2AY07+BMYGQd8jn70ZsAUweFFoc61bprYkCf2SyMRTDniX+bRV0iwwX+Uch4aXBzEe1v9V01KVMTPtmfv9X+ZftAa415W52GTLM0Yf2RuV+IrP4uO9Z1hD7xKe4cbY9TpCV56VSqLZsTk/YQVUIuuCeKvm8KoXJrkhvzCfLS13xGrb2pLHiJcMjISlh2Vgn6KTp5q3+ePwvkpD6/1Z7v+AAwG3Hz/K6Y/VMOFE5i4KAFra7cC8DriqHTdzmrDOKkL3p53ICPJsgPKgIef6J/iu+rkL979LXgp4rbTWTfNx0pB78QUK8KnSjoOWoLblXyizirM89cgZm6CaemjOtkVFdaIIU3Rr1+iJYFu4MylV+GxOUc1zOZFBsdZhYO6Y7DDmvyQIBSIuhRldaDEU1BRmTyiR7LyGTwG0fj9Dwwh7yq/8/ZhZgXFggijdPFC3flfRq9q3/cDIS313aUYL9O8d78AXnnr3vAVzxZE+Tffh4XBcjjV1hSVE/qO2GxLHOQGJTEj/v+R0m94I+onZaPfIJxgm0sbQxwCEa9O+sDD8+8ft0UnQ3ucmgTfT1Qlad2pAIvUV53YkyFzaZhDA==
+
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -8,7 +19,7 @@ spec:
   chart:
     spec:
       chart: app
-      version: '0.1.2'
+      version: '0.1.3'
       sourceRef:
         kind: HelmRepository
         name: vibioh
@@ -59,3 +70,41 @@ spec:
       ALGOLIA_KEY: AgBV0nJcWmpw105VCY6VppwrHBmvswytX76CwJLO6kygdIAC6knKNvUQF7kkugx1MWgSmcHJRKdkqUUZTJNIyef3uuikKQRHpZDJOv6LuHB+a+027WjYqlhvZEDd9yd+s+vaX/JmtDGGyIC0yb/RZF6ldY3SHamGbRWiJbpELYCstN0JOmdufRWujNVhSpC0/CL51/wPcFyEYfxe4Vhk2InWGC5qGsDJfL/eUTQMc6x3DxYM4IHahvL/ntP7N5dedNFdr1oo6KLGupBTpzAYY8RYFlG34CSFzglQNRujJVHNiXM0l2zP9CQD0Q6bAMKUY2RwAd9DamjLvxtx12Za4rNCzUHOMUroNyH0FN5+mTQEQJ+GKguxXpmen6IRIcpTyLPR3EM4gXBC7XImNclxGbqJZTMAXRChZgkX9FTBOU4wH7mbV55kz/Ry7IMydVB52IdRSRByct38Wh4zRvwl5biTiYHGx5mlUpcRhVuqgOeQZdgfmBgDkG4eXmVMIbuwIEDnGDRT6mEV4EGaYCzY9ekfzci7DDLk9XASqgFsd1GeIlFzsnQwfio8oQbebyxd1Yljee/uvo3dq5RP7l6nDUNVSWrlj2MJsfTGDLgyWtcKPOURcAcosmHS1pTRH0SDsUSIWhsJtRnRn9oaNiKrRgoO05xP5OuRQopT4gGzFRznAbhgOsEEV5QEkxWl9K8oXGOsQenwqtTCJpLZomHFTz+RgzFvGyNKb6Jgr6pfplKQqg==
     autoscaling:
       enabled: false
+    initContainers:
+      - name: algolia
+        image: vibioh/talks:202405252350 # {"$imagepolicy": "default:flux-talks-web"}
+        imagePullPolicy: Always
+        command:
+          - /revealgolia
+          - -source
+          - /www/doc/
+          - -prefixFromFolder
+        envFrom:
+          - secretRef:
+              name: talks-algolia
+        env:
+          - name: REVEALGOLIA_LOGGER_JSON
+            value: 'true'
+          - name: REVEALGOLIA_APP
+            valueFrom:
+              secretKeyRef:
+                name: talks
+                key: ALGOLIA_APP
+          - name: REVEALGOLIA_INDEX
+            valueFrom:
+              secretKeyRef:
+                name: talks
+                key: ALGOLIA_INDEX
+        resources:
+          limits:
+            memory: 64Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
