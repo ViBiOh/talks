@@ -1,4 +1,3 @@
----
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
@@ -7,7 +6,6 @@ metadata:
 spec:
   encryptedData:
     REVEALGOLIA_KEY: AgB9AhbEI0C9BI6d1067xtb7hzeJcqocYqwxYqDvt6f3SAwx6JS3r0my3b5ubL8sJMhb39tz06tX5Km+kZ0eWPPpaIAttp6JygEsCZ+5af2TI7PrsOM9mCOOZe1SKnmaqz1nptEl+thTU174sdeOyRzoy5DV2AY07+BMYGQd8jn70ZsAUweFFoc61bprYkCf2SyMRTDniX+bRV0iwwX+Uch4aXBzEe1v9V01KVMTPtmfv9X+ZftAa415W52GTLM0Yf2RuV+IrP4uO9Z1hD7xKe4cbY9TpCV56VSqLZsTk/YQVUIuuCeKvm8KoXJrkhvzCfLS13xGrb2pLHiJcMjISlh2Vgn6KTp5q3+ePwvkpD6/1Z7v+AAwG3Hz/K6Y/VMOFE5i4KAFra7cC8DriqHTdzmrDOKkL3p53ICPJsgPKgIef6J/iu+rkL979LXgp4rbTWTfNx0pB78QUK8KnSjoOWoLblXyizirM89cgZm6CaemjOtkVFdaIIU3Rr1+iJYFu4MylV+GxOUc1zOZFBsdZhYO6Y7DDmvyQIBSIuhRldaDEU1BRmTyiR7LyGTwG0fj9Dwwh7yq/8/ZhZgXFggijdPFC3flfRq9q3/cDIS313aUYL9O8d78AXnnr3vAVzxZE+Tffh4XBcjjV1hSVE/qO2GxLHOQGJTEj/v+R0m94I+onZaPfIJxgm0sbQxwCEa9O+sDD8+8ft0UnQ3ucmgTfT1Qlad2pAIvUV53YkyFzaZhDA==
-
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -36,11 +34,11 @@ spec:
     nameOverride: talks
     image:
       name: vibioh/talks
-      tag: '202405252350' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tag: '202406161329' # {"$imagepolicy": "default:flux-talks-web:tag"}
     labels:
       tags.datadoghq.com/env: 'production'
       tags.datadoghq.com/service: 'talks'
-      tags.datadoghq.com/version: '202405252350' # {"$imagepolicy": "default:flux-talks-web:tag"}
+      tags.datadoghq.com/version: '202406161329' # {"$imagepolicy": "default:flux-talks-web:tag"}
     env:
       - name: GOMAXPROCS
         valueFrom:
@@ -72,7 +70,7 @@ spec:
       enabled: false
     initContainers:
       - name: algolia
-        image: vibioh/talks:202405252350 # {"$imagepolicy": "default:flux-talks-web"}
+        image: vibioh/talks:202406161329 # {"$imagepolicy": "default:flux-talks-web"}
         imagePullPolicy: Always
         command:
           - /revealgolia
