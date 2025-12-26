@@ -1,5 +1,5 @@
 # scripts
-scripts/
+/scripts/
 
 node_modules/
 **/npm-debug.log
