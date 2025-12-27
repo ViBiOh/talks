@@ -115,7 +115,7 @@ Autres commandes ajoutées
 
 
 ```
-open vnc://localhost:secret@localhost:5900
+open vnc://127.0.0.1:secret@127.0.0.1:5900
 ```
 
 ![](e2e.gif)
