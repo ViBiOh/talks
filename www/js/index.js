@@ -44,6 +44,7 @@ function removeAllChild(element) {
  * @return {Promise} Promise resolved when script is loaded
  */
 async function insertRevealScripts() {
+  await addScript('/vendor/marked.js?v={{version}}');
   await addScript('/vendor/reveal.js?v={{version}}');
   await addScript('/vendor/markdown.js?v={{version}}');
   await addScript('/vendor/highlight.js?v={{version}}');
@@ -126,18 +127,18 @@ async function loadMarkdown(markdownFilename, pageNum, slideNum) {
  * @return {marked.Renderer} Configured renderer
  */
 function getMarkedRenderer() {
-  const renderer = new (RevealMarkdown().marked.Renderer)();
+  const renderer = new marked.Renderer();
 
-  renderer.image = (href, title) =>
-    `<img data-src="/doc/${currentName}/${href}?v={{version}}" alt="${title}" />`;
+  renderer.image = (image) =>
+    `<img data-src="/doc/${currentName}/${image.href}?v={{version}}" alt="${image.title}" />`;
 
-  renderer.link = (href, _, text) => {
-    let url = href;
-    if (!/^https?:\/\//.test(href)) {
-      url = `/doc/${currentName}/${href}`;
+  renderer.link = (link) => {
+    let url = link.href;
+    if (!/^https?:\/\//.test(link.href)) {
+      url = `/doc/${currentName}/${link.href}`;
     }
 
-    return `<a href="${url}">${text}</a>`;
+    return `<a href="${url}">${link.text}</a>`;
   };
 
   return renderer;
